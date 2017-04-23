@@ -15,14 +15,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="br.edu.leaosampaio.Activities.LoginActivity"
+            android:name=".LoginActivity"
             android:label="@string/title_activity_login">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="br.edu.leaosampaio.Activities.CadastroActivity"></activity>
+        <activity android:name=".CadastroActivity" />
+        <activity android:name=".FeedActivity"></activity>
     </application>
 
 </manifest>

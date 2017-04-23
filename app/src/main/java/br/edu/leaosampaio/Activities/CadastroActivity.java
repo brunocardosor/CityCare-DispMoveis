@@ -42,6 +42,8 @@ public class CadastroActivity extends AppCompatActivity{
         cadastrar.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 UsuarioDAO usr = new UsuarioDAO(CadastroActivity.this);
                 Usuario user = new Usuario();
                 user.setNome(txtNome.getText().toString());
@@ -50,7 +52,7 @@ public class CadastroActivity extends AppCompatActivity{
                 user.setCidade(spinCidade.getSelectedItem().toString());
                 user.setEmail(txtEmail.getText().toString());
                 user.setSenha(txtSenha.getText().toString());
-                usr.salvar(user);
+                usr.salvar(user, CadastroActivity.this);
                 finish();
             }
         }));

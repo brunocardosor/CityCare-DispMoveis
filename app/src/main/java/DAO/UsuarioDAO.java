@@ -29,7 +29,7 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 
 
     @Override
-    public void salvar(Usuario usuario) {
+    public void salvar(Usuario usuario, Context context) {
         SQLiteDatabase db = getWritableDatabase();
         try {
             db.execSQL("INSERT INTO usuario(nome_usuario,sobrenome_usuario,estado_usuario,cidade_usuario," +
@@ -37,10 +37,11 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
                     "','" + usuario.getSobrenome() + "','" + usuario.getEstado() +
                     "','" + usuario.getCidade() + "','" + usuario.getEmail() + "','" + usuario.getSenha() + "','1');");
             Log.i("SALVAR", "Salvo com sucesso");
+            Toast.makeText(context, "Cadastro realizado com Sucesso", Toast.LENGTH_SHORT).show();
 
         } catch (Exception ex){
             Log.e("SALVAR", ex.getMessage());
-            Log.println(Log.ERROR,"SALVAR",ex.getMessage());
+            Toast.makeText(context, "Não foi possível realizar o cadastro", Toast.LENGTH_SHORT).show();
 
         }finally {
             db.close();
@@ -48,15 +49,17 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
     }
 
     @Override
-    public void delete(Usuario usuario) {
+    public void delete(Usuario usuario, Context context) {
 
         SQLiteDatabase db = getWritableDatabase();
 
         try{
             db.delete("usuario","id_usuario", new String[]{String.valueOf(usuario.getId())});
             Log.i("DELETE", "Usuário deletado");
+            Toast.makeText(context, "Usuário deletado com Sucesso", Toast.LENGTH_SHORT).show();
         } catch (Exception ex) {
             Log.e("DELETE", ex.getMessage());
+            Toast.makeText(context, "ERRO!", Toast.LENGTH_SHORT).show();
         } finally {
             db.close();
         }
@@ -64,7 +67,7 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
     }
 
     @Override
-    public void atualizar(Usuario usuario) {
+    public void atualizar(Usuario usuario, Context context) {
         SQLiteDatabase db = getWritableDatabase();
         try{
             //db.update();

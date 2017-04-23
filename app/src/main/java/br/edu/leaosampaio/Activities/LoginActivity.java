@@ -35,6 +35,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import DAO.UsuarioDAO;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
@@ -64,6 +66,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private UsuarioDAO ud;
+    private TextView txtErro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +111,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         }));
 
+        txtErro = (TextView) findViewById(R.id.txtErro);
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
@@ -189,7 +194,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             focusView = mEmailView;
             cancel = true;
         } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
+            mEmailView.setError("Endereço de email inválido");
             focusView = mEmailView;
             cancel = true;
         }
@@ -204,7 +209,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
+            if(ud.login(email, password)){
+                Intent i = new Intent(LoginActivity.this, FeedActivity.class);
+                startActivity(i);
+            } else {
+                txtErro.setPadding(16,16,16,16);
+                txtErro.setText("Login ou Senha incorretos.");
+                finish();
+            }
         }
+
+
     }
 
     private boolean isEmailValid(String email) {
@@ -213,8 +228,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() > 7;
     }
 
     /**
