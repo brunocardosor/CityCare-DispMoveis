@@ -15,15 +15,17 @@ import android.widget.Spinner;
 import DAO.UsuarioDAO;
 import Modelo.Usuario;
 
-public class CadastroActivity extends AppCompatActivity {
+public class CadastroActivity extends AppCompatActivity{
 
-    private String estado[] = {"Acre","Alagoas","Amapá","Amazonas","Bahia","Ceará","Distrito Federal","Espírito Santo","Goiás","Maranhão","Mato Grosso","Mato Grosso do Sul","Minas Gerais","Pará","Paraíba","Paraná","Pernambuco","Piauí","Rio de Janeiro","Rio Grande do Norte","Rio Grande do Sul","Rondônia","Roraima","Santa Catarina","São Paulo","Sergipe","Tocantins"};
+    private String estado[] = {"","Acre","Alagoas","Amapá","Amazonas","Bahia","Ceará","Distrito Federal","Espírito Santo","Goiás","Maranhão","Mato Grosso","Mato Grosso do Sul","Minas Gerais","Pará","Paraíba","Paraná","Pernambuco","Piauí","Rio de Janeiro","Rio Grande do Norte","Rio Grande do Sul","Rondônia","Roraima","Santa Catarina","São Paulo","Sergipe","Tocantins"};
+    private String cidade[] = {"","Acrelândia","Assis Brasil","Brasileia","Bujari","Capixaba","Cruzeiro do Sul","Epitaciolândia","Feijó","Jordão","Manoel Urbano","Marechal Thaumaturgo","Mâncio Lima","Plácido de Castro","Porto Acre","Porto Walter","Rio Branco","Rodrigues Alves","Santa Rosa do Purus","Sena Madureira","Senador Guiomard","Tarauacá","Xapuri"};
     private EditText txtNome;
     private EditText txtSobrenome;
     private Spinner spinEstado;
     private Spinner spinCidade;
     private EditText txtEmail;
     private EditText txtSenha;
+    private Button cadastrar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,43 +38,40 @@ public class CadastroActivity extends AppCompatActivity {
         txtEmail = (EditText) findViewById(R.id.txtEmail);
         txtSenha = (EditText) findViewById(R.id.txtSenha);
 
-        Button cadastrar = (Button) findViewById(R.id.btCadastro);
-        cadastrar.setOnClickListener(new View.OnClickListener() {
+        cadastrar = (Button) findViewById(R.id.btCadastrar);
+        cadastrar.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 UsuarioDAO usr = new UsuarioDAO(CadastroActivity.this);
                 Usuario user = new Usuario();
-                user.setNome(txtNome.toString());
-                user.setSobrenome(txtSobrenome.toString());
-                user.setEstado(spinEstado.toString());
-                user.setCidade(spinCidade.toString());
-                user.setEmail(txtEmail.toString());
-                user.setSenha(txtSenha.toString());
+                user.setNome(txtNome.getText().toString());
+                user.setSobrenome(txtSobrenome.getText().toString());
+                user.setEstado(spinEstado.getSelectedItem().toString());
+                user.setCidade(spinCidade.getSelectedItem().toString());
+                user.setEmail(txtEmail.getText().toString());
+                user.setSenha(txtSenha.getText().toString());
                 usr.salvar(user);
                 finish();
             }
-        });
+        }));
 
         ArrayAdapter<String> estados = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,estado);
         spinEstado.setAdapter(estados);
 
-        /*switch (spinEstado.getSelectedItemPosition()) {
 
-            case 0 :
-                String cidade[] = {"Acrelândia","Assis Brasil","Brasileia","Bujari","Capixaba","Cruzeiro do Sul","Epitaciolândia","Feijó","Jordão","Manoel Urbano","Marechal Thaumaturgo","Mâncio Lima","Plácido de Castro","Porto Acre","Porto Walter","Rio Branco","Rodrigues Alves","Santa Rosa do Purus","Sena Madureira","Senador Guiomard","Tarauacá","Xapuri"};
-                ArrayAdapter<String> cidades = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,cidade);
-                spinCidade.setAdapter(cidades);
-                spinCidade.setClickable(true);
-                break;
-            default:
-                break;
+        ArrayAdapter<String> cidades = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,cidade);
+        spinCidade.setAdapter(cidades);
 
-        }*/
+        if(spinEstado.getSelectedItem() != "") {
+            spinCidade.setClickable(true);
+        }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Cadastro");
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffff8800")));
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

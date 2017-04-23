@@ -60,6 +60,7 @@
         android:hint="Senha"
         android:id="@+id/txtSenha"/>
     <Button
+        android:id="@+id/btCadastrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"

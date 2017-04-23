@@ -85,7 +85,8 @@
                 android:background="@android:color/holo_orange_dark"
                 android:text="     Cadastre-se     "
                 android:textColor="@android:color/background_light"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                />
 
         </LinearLayout>
     </ScrollView>

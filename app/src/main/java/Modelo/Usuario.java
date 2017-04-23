@@ -1,5 +1,7 @@
 package Modelo;
 
+import android.text.Editable;
+
 /**
  * Created by lenilson on 21/04/17.
  */
@@ -13,7 +15,7 @@ public class Usuario {
     private String senha;
     private String estado;
     private String cidade;
-    private boolean status = true;
+    private boolean status;
 
 
     public Long getId() {

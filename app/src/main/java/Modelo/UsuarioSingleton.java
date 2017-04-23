@@ -4,7 +4,7 @@ package Modelo;
  * Created by lenilson on 21/04/17.
  */
 
-class UsuarioSingleton {
+public class UsuarioSingleton {
     private static Usuario usuario = null;
 
     public Usuario getInstance() {
