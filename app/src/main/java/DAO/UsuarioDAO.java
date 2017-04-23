@@ -37,7 +37,6 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
                     "','" + usuario.getSobrenome() + "','" + usuario.getEstado() +
                     "','" + usuario.getCidade() + "','" + usuario.getEmail() + "','" + usuario.getSenha() + "','1');");
             Log.i("SALVAR", "Salvo com sucesso");
-            Log.println(Log.INFO,"SALVAR","Salvo com Sucesso");
 
         } catch (Exception ex){
             Log.e("SALVAR", ex.getMessage());
@@ -50,14 +49,31 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 
     @Override
     public void delete(Usuario usuario) {
+
         SQLiteDatabase db = getWritableDatabase();
-        db.delete("usuario","id_usuario", new String[]{String.valueOf(usuario.getId())});
-        Log.i("DELETE", "Usuário deletado");
+
+        try{
+            db.delete("usuario","id_usuario", new String[]{String.valueOf(usuario.getId())});
+            Log.i("DELETE", "Usuário deletado");
+        } catch (Exception ex) {
+            Log.e("DELETE", ex.getMessage());
+        } finally {
+            db.close();
+        }
+
     }
 
     @Override
     public void atualizar(Usuario usuario) {
-
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            //db.update();
+            Log.i("UPDATE", "Atualizado com Sucesso");
+        } catch (Exception ex){
+            Log.e("UPDATE", ex.getMessage());
+        } finally {
+            db.close();
+        }
     }
 
     public boolean login(String email, String senha) {
