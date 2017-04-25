@@ -34,10 +34,10 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
     public void salvar(Usuario usuario) {
         SQLiteDatabase db = getWritableDatabase();
         try {
-            db.execSQL("INSERT INTO usuario(nome_usuario,sobrenome_usuario,estado_usuario,cidade_usuario," +
+            db.execSQL("INSERT INTO usuario(nome_usuario,estado_usuario,cidade_usuario," +
                     "email_usuario,senha_usuario,status_usuario) VALUES('" + usuario.getNome() +
-                    "','" + usuario.getSobrenome() + "','" + usuario.getEstado() +
-                    "','" + usuario.getCidade() + "','" + usuario.getEmail() + "','" + usuario.getSenha() + "','1');");
+                    "','" + usuario.getEstado() + "','" + usuario.getCidade() +
+                    "','" + usuario.getEmail() + "','" + usuario.getSenha() + "','1');");
             Log.i("SALVAR", "Salvo com sucesso");
 
         } catch (Exception ex){
@@ -61,22 +61,25 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 
     }
 
-    public boolean login(String email, String senha, Context context) {
-        SQLiteDatabase db = getWritableDatabase();
-        Cursor c = db.query("usuario", null, "email_usuario=" + email, null, null, null, null);
-        List<Usuario> usuarios = listar(c);
+    public void login(String email, String senha, Context context) {
+        try {
+            SQLiteDatabase db = getWritableDatabase();
+            Cursor c = db.query("usuario", null, "email_usuario='" + email + "'", null, null, null, null);
+            List<Usuario> usuarios = listar(c);
             if (usuarios.size() == 1 && usuarios.get(0).getEmail().equals(email) && usuarios.get(0).getSenha().equals(senha)) {
                 //verifica se o usuário está ativo
                 if (usuarios.get(0).isStatus() == true) {
                     UsuarioSingleton us = new UsuarioSingleton();
                     us.setInstance(usuarios.get(0));
                     Intent i = new Intent(context, FeedActivity.class);
-                    return true;
-                } else
-                    return false;
-            } else
-                return false;
+                }
+            }
+
+        } catch (Exception ex) {
+            Log.e("LOGIN", ex.getMessage());
         }
+    }
+
 
     private List<Usuario> listar(Cursor c) {
         List<Usuario> usuarios = new ArrayList<Usuario>();
@@ -86,7 +89,6 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
                 usuarios.add(usuario);
                 usuario.setId(c.getLong(c.getColumnIndex("id_usuario")));
                 usuario.setNome(c.getString(c.getColumnIndex("nome_usuario")));
-                usuario.setSobrenome(c.getString(c.getColumnIndex("sobrenome_usuario")));
                 usuario.setEmail(c.getString(c.getColumnIndex("email_usuario")));
                 usuario.setSenha(c.getString(c.getColumnIndex("senha_usuario")));
                 usuario.setEstado(c.getString(c.getColumnIndex("estado_usuario")));

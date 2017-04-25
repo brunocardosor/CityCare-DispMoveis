@@ -10,7 +10,6 @@ public class Usuario {
 
     private Long id;
     private String nome;
-    private String sobrenome;
     private String email;
     private String senha;
     private String estado;
@@ -32,10 +31,6 @@ public class Usuario {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public void setSobrenome(String sobrenome) {
-        this.sobrenome = sobrenome;
     }
 
     public String getEmail() {
@@ -79,7 +74,7 @@ public class Usuario {
     }
 
     public String toString(){
-        return this.nome + sobrenome;
+        return this.nome;
     }
 
 }
