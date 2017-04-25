@@ -24,22 +24,21 @@ public abstract class GenericDAO<T> extends SQLiteOpenHelper{
         db.execSQL("CREATE TABLE IF NOT EXISTS " + tabela[0] + "(" +
                 "id_"+tabela[0] +" INTEGER primary key autoincrement," +
                 "nome_usuario VARCHAR(100) not null," +
-                "sobrenome_usuario VARCHAR(100) not null," +
-                "email_usuario VARCHAR(100) unique not null,"+
-                "senha_usuario VARCHAR(100) not null,"+
-                "estado_usuario VARCHAR(45) not null,"+
+                "email_usuario VARCHAR(100) unique not null," +
+                "senha_usuario VARCHAR(100) not null," +
+                "estado_usuario VARCHAR(45) not null," +
                 "cidade_usuario VARCHAR(45) not null," +
                 "status_usuario boolean not null);");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS " + tabela[1] + "(" +
-                "id_"+tabela[1]+" INTEGER primary key autoincrement,"+
+                "id_"+tabela[1]+" INTEGER primary key autoincrement," +
                 "descricao_categoria VARCHAR(45) not null);");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS " + tabela[2] +"(" +
-                "id_" + tabela[2] + " INTEGER primary key autoincrement,"+
+                "id_" + tabela[2] + " INTEGER primary key autoincrement," +
                 "denuncia_id_usuario INTEGER not null," +
                 "denuncia_id_categoria INTEGER not null," +
-                "denuncia_descricao VARCHAR(400) not null,"+
+                "denuncia_descricao VARCHAR(400) not null," +
                 "denuncia_data_hora TEXT not null," +
                 "FOREIGN KEY(denuncia_id_usuario) REFERENCES "+ tabela[0] + "(id_"+tabela[0]+")," +
                 "FOREIGN KEY(denuncia_id_categoria) REFERENCES " + tabela[1] +"(id_"+tabela[1]+"));");

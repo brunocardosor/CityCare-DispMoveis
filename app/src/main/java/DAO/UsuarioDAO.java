@@ -16,6 +16,7 @@ import java.util.List;
 import Modelo.Usuario;
 import Modelo.UsuarioSingleton;
 import br.edu.leaosampaio.Activities.CadastroActivity;
+import br.edu.leaosampaio.Activities.FeedActivity;
 
 /**
  * Created by lenilson on 21/04/17.
@@ -24,6 +25,7 @@ import br.edu.leaosampaio.Activities.CadastroActivity;
 public class UsuarioDAO extends GenericDAO<Usuario> {
     public UsuarioDAO(Context context) {
         super(context);
+
     }
 
 
@@ -37,7 +39,6 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
                     "','" + usuario.getSobrenome() + "','" + usuario.getEstado() +
                     "','" + usuario.getCidade() + "','" + usuario.getEmail() + "','" + usuario.getSenha() + "','1');");
             Log.i("SALVAR", "Salvo com sucesso");
-            Log.println(Log.INFO,"SALVAR","Salvo com Sucesso");
 
         } catch (Exception ex){
             Log.e("SALVAR", ex.getMessage());
@@ -60,7 +61,7 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 
     }
 
-    public boolean login(String email, String senha) {
+    public boolean login(String email, String senha, Context context) {
         SQLiteDatabase db = getWritableDatabase();
         Cursor c = db.query("usuario", null, "email_usuario=" + email, null, null, null, null);
         List<Usuario> usuarios = listar(c);
@@ -69,6 +70,7 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
                 if (usuarios.get(0).isStatus() == true) {
                     UsuarioSingleton us = new UsuarioSingleton();
                     us.setInstance(usuarios.get(0));
+                    Intent i = new Intent(context, FeedActivity.class);
                     return true;
                 } else
                     return false;
