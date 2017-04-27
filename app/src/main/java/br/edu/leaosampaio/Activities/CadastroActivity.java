@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,16 +45,7 @@ public class CadastroActivity extends AppCompatActivity{
         cadastrar = (Button) findViewById(R.id.btCadastrar);
         cadastrar.setOnClickListener((new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                UsuarioDAO usr = new UsuarioDAO(CadastroActivity.this);
-                Usuario user = new Usuario();
-                user.setNome(txtNome.getText().toString() + " " + txtSobrenome.getText().toString());
-                user.setEstado(spinEstado.getSelectedItem().toString());
-                user.setCidade(spinCidade.getSelectedItem().toString());
-                user.setEmail(txtEmail.getText().toString());
-                user.setSenha(txtSenha.getText().toString());
-                usr.salvar(user);
-                finish();
+            public void onClick(View view) { UsuarioCadastrar();
             }
         }));
 
@@ -67,6 +59,33 @@ public class CadastroActivity extends AppCompatActivity{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Cadastro");
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffff8800")));
+    }
+
+    public void UsuarioCadastrar(){
+
+        if(!TextUtils.isEmpty(txtNome.getText().toString())){
+            txtNome.setError(getString(R.string.error_field_required));
+        }
+
+        if(!TextUtils.isEmpty(txtSobrenome.getText().toString())){
+            txtSobrenome.setError(getString(R.string.error_field_required));
+        }
+        if(!TextUtils.isEmpty(txtEmail.getText().toString())){
+            txtEmail.setError(getString(R.string.error_field_required));
+        }
+        if(!TextUtils.isEmpty(txtSenha.getText().toString())){
+            txtSenha.setError((getString(R.string.error_field_required)));
+        } else {
+            UsuarioDAO usr = new UsuarioDAO(CadastroActivity.this);
+            Usuario user = new Usuario();
+            user.setNome(txtNome.getText().toString() + " " + txtSobrenome.getText().toString());
+            user.setEstado(spinEstado.getSelectedItem().toString());
+            user.setCidade(spinCidade.getSelectedItem().toString());
+            user.setEmail(txtEmail.getText().toString());
+            user.setSenha(txtSenha.getText().toString());
+            usr.salvar(user,this);
+            finish();
+        }
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import Modelo.Usuario;
 import Modelo.UsuarioSingleton;
 import br.edu.leaosampaio.Activities.CadastroActivity;
 import br.edu.leaosampaio.Activities.FeedActivity;
+import br.edu.leaosampaio.Activities.R;
 
 /**
  * Created by lenilson on 21/04/17.
@@ -31,7 +33,7 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 
 
     @Override
-    public void salvar(Usuario usuario) {
+    public void salvar(Usuario usuario, Context context) {
         SQLiteDatabase db = getWritableDatabase();
         try {
             db.execSQL("INSERT INTO usuario(nome_usuario,estado_usuario,cidade_usuario," +
@@ -39,10 +41,11 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
                     "','" + usuario.getEstado() + "','" + usuario.getCidade() +
                     "','" + usuario.getEmail() + "','" + usuario.getSenha() + "','1');");
             Log.i("SALVAR", "Salvo com sucesso");
+            Toast.makeText(context,"Cadastro efetuado com sucesso",Toast.LENGTH_SHORT).show();
 
         } catch (Exception ex){
             Log.e("SALVAR", ex.getMessage());
-            Log.println(Log.ERROR,"SALVAR",ex.getMessage());
+            Toast.makeText(context,"ERRO!",Toast.LENGTH_SHORT).show();
 
         }finally {
             db.close();
@@ -50,18 +53,18 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
     }
 
     @Override
-    public void delete(Usuario usuario) {
+    public void delete(Usuario usuario, Context context) {
         SQLiteDatabase db = getWritableDatabase();
         db.delete("usuario","id_usuario", new String[]{String.valueOf(usuario.getId())});
         Log.i("DELETE", "Usuário deletado");
     }
 
     @Override
-    public void atualizar(Usuario usuario) {
+    public void atualizar(Usuario usuario, Context context) {
 
     }
 
-    public void login(String email, String senha, Context context) {
+    public void login(TextView erro, String email, String senha, Context context) {
         try {
             SQLiteDatabase db = getWritableDatabase();
             Cursor c = db.query("usuario", null, "email_usuario='" + email + "'", null, null, null, null);
@@ -72,7 +75,14 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
                     UsuarioSingleton us = new UsuarioSingleton();
                     us.setInstance(usuarios.get(0));
                     Intent i = new Intent(context, FeedActivity.class);
+                } else {
+                    //Caso não esteja Ativado
+                    erro.setText("Usuário desativado");
                 }
+
+            } else {
+                //Login ou senha incorretos
+                erro.setText("Login ou Senha incorretos");
             }
 
         } catch (Exception ex) {
@@ -93,7 +103,7 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
                 usuario.setSenha(c.getString(c.getColumnIndex("senha_usuario")));
                 usuario.setEstado(c.getString(c.getColumnIndex("estado_usuario")));
                 usuario.setCidade(c.getString(c.getColumnIndex("cidade_usuario")));
-                if (c.getString(c.getColumnIndex("status_usuario")) == "1") {
+                if (c.getInt(c.getColumnIndex("status_usuario")) == 1) {
                     usuario.setStatus(true);
                 } else
                     usuario.setStatus(false);

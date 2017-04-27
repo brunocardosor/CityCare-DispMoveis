@@ -52,9 +52,9 @@ public abstract class GenericDAO<T> extends SQLiteOpenHelper{
 
     }
 
-    public abstract void salvar(T t);
+    public abstract void salvar(T t, Context c);
 
-    public abstract void delete(T t);
+    public abstract void delete(T t, Context c);
 
-    public abstract void atualizar(T t);
+    public abstract void atualizar(T t, Context c);
 }

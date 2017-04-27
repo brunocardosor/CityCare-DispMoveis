@@ -30,6 +30,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -62,10 +63,11 @@ public class LoginActivity extends AppCompatActivity {
     private UserLoginTask mAuthTask = null;
 
     // UI references.
-    private TextView mEmailView;
+    private EditText mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private TextView tvErro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +93,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        tvErro = (TextView) findViewById(R.id.tvErro);
+
         Button mEmailSignInButton = (Button) findViewById(R.id.btLogin);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -110,6 +114,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
     }
 
    /*private void populateAutoComplete() {
@@ -199,13 +204,13 @@ public class LoginActivity extends AppCompatActivity {
             // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            //showProgress(true);
-            //mAuthTask = new UserLoginTask(email, password);
-            //mAuthTask.execute((Void) null);
+            //Show a progress spinner, and kick off a background task to
+            //perform the user login attempt.
+            showProgress(true);
+            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask.execute((Void) null);
             UsuarioDAO userD = new UsuarioDAO(this);
-            userD.login(email,password,this);
+            userD.login(tvErro,email,password,this);
         }
     }
 
