@@ -9,11 +9,14 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import DAO.UsuarioDAO;
 import Modelo.Usuario;
@@ -55,7 +58,6 @@ public class CadastroActivity extends AppCompatActivity{
         ArrayAdapter<String> cidades = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,cidade);
         spinCidade.setAdapter(cidades);
 
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Cadastro");
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffff8800")));
@@ -63,19 +65,37 @@ public class CadastroActivity extends AppCompatActivity{
 
     public void UsuarioCadastrar(){
 
-        if(!TextUtils.isEmpty(txtNome.getText().toString())){
+        if(TextUtils.isEmpty(txtNome.getText().toString())){
             txtNome.setError(getString(R.string.error_field_required));
         }
 
-        if(!TextUtils.isEmpty(txtSobrenome.getText().toString())){
+        if(TextUtils.isEmpty(txtSobrenome.getText().toString())){
             txtSobrenome.setError(getString(R.string.error_field_required));
         }
-        if(!TextUtils.isEmpty(txtEmail.getText().toString())){
+
+        if(spinEstado.getSelectedItemPosition() == 0){
+            TextView errorTextEstado = (TextView) spinEstado.getSelectedView();
+            errorTextEstado.setError(getString(R.string.error_field_required));
+            errorTextEstado.setTextColor(Color.RED);
+            errorTextEstado.setText(getString(R.string.error_field_required));
+        }
+
+        if(spinCidade.getSelectedItemPosition() == 0){
+            TextView errorTextCidade = (TextView) spinCidade.getSelectedView();
+            errorTextCidade.setError(getString(R.string.error_field_required));
+            errorTextCidade.setTextColor(Color.RED);
+            errorTextCidade.setText(getString(R.string.error_field_required));
+        }
+
+        if(TextUtils.isEmpty(txtEmail.getText().toString())){
             txtEmail.setError(getString(R.string.error_field_required));
         }
-        if(!TextUtils.isEmpty(txtSenha.getText().toString())){
+
+        if(TextUtils.isEmpty(txtSenha.getText().toString())){
             txtSenha.setError((getString(R.string.error_field_required)));
-        } else {
+        }
+
+ else {
             UsuarioDAO usr = new UsuarioDAO(CadastroActivity.this);
             Usuario user = new Usuario();
             user.setNome(txtNome.getText().toString() + " " + txtSobrenome.getText().toString());
