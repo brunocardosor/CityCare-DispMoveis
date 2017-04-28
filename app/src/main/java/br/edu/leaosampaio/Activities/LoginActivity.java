@@ -67,7 +67,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    private TextView tvErro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +91,6 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-        tvErro = (TextView) findViewById(R.id.tvErro);
 
         Button mEmailSignInButton = (Button) findViewById(R.id.btLogin);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -162,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
             UsuarioDAO userD = new UsuarioDAO(this);
-            userD.login(tvErro,email,password,this);
+            userD.login(email,password,this);
         }
     }
 

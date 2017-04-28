@@ -64,7 +64,7 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 
     }
 
-    public void login(TextView erro, String email, String senha, Context context) {
+    public void login(String email, String senha, Context context) {
         try {
             SQLiteDatabase db = getWritableDatabase();
             Cursor c = db.query("usuario", null, "email_usuario='" + email + "'", null, null, null, null);
@@ -75,16 +75,9 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
                     UsuarioSingleton us = new UsuarioSingleton();
                     us.setInstance(usuarios.get(0));
                     Intent i = new Intent(context, FeedActivity.class);
-                } else {
-                    //Caso não esteja Ativado
-                    erro.setText("Usuário desativado");
+
                 }
-
-            } else {
-                //Login ou senha incorretos
-                erro.setText("Login ou Senha incorretos");
             }
-
         } catch (Exception ex) {
             Log.e("LOGIN", ex.getMessage());
         }
