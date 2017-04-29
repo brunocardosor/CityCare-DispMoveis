@@ -33,11 +33,15 @@
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spinEstado"/>
+        android:id="@+id/spinEstado"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        />
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spinCidade"
+        android:layout_margin="20dp"
         android:clickable="false"/>
 
     <EditText

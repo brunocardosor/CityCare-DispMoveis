@@ -6,4 +6,9 @@
     android:layout_height="match_parent"
     tools:context="br.edu.leaosampaio.Activities.FeedActivity">
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HELLO WORLD"/>
 </android.support.constraint.ConstraintLayout>

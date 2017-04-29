@@ -37,7 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:hint="Login"
+                    android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -53,7 +53,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:hint="Senha"
+                    android:hint="@string/prompt_password"
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
@@ -66,9 +66,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/holo_orange_dark"
-                android:gravity="center"
-                android:id="@+id/txtErro"/>
+                android:id="@+id/tvErro"
+                />
+
 
             <Button
                 android:id="@+id/btLogin"
@@ -94,7 +94,6 @@
                 android:textColor="@android:color/background_light"
                 android:textStyle="bold"
                 />
-
         </LinearLayout>
     </ScrollView>
 
