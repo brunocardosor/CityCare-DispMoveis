@@ -130,8 +130,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void attemptLogin() {
 
-        // Store values at the time of the login attempt.
-        TextView tv = new TextView(this);
+        TextView tvErro = new TextView(this);
+
+        // Store values at the time of the login attempt
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
@@ -156,14 +157,14 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(i);
         } else {
             Animation a = AnimationUtils.loadAnimation(this,android.R.anim.fade_in);
-            tv.setPadding(16,16,16,16);
-            tv.setTextSize(20);
-            tv.setAnimation(a);
-            tv.setGravity(Gravity.CENTER);
-            tv.setText(getString(R.string.error_incorrect_password_or_email));
-            tv.setTextColor(Color.RED);
+            tvErro.setPadding(16,16,16,16);
+            tvErro.setTextSize(20);
+            tvErro.setAnimation(a);
+            tvErro.setGravity(Gravity.CENTER);
+            tvErro.setText(getString(R.string.error_incorrect_password_or_email));
+            tvErro.setTextColor(Color.RED);
             LinearLayout loginLayout = (LinearLayout) findViewById(R.id.email_login_form);
-            loginLayout.addView(tv);
+            loginLayout.addView(tvErro);
         }
     }
 
