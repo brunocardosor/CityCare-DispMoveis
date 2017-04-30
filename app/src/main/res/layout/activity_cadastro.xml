@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <LinearLayout
         android:id="@+id/form_cadastro"
         android:layout_width="match_parent"
@@ -21,13 +20,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Nome"
-            android:id="@+id/txtNome"/>
+            android:id="@+id/txtNome"
+            android:maxLines="1"/>
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Sobrenome"
-            android:id="@+id/txtSobrenome"/>
+            android:id="@+id/txtSobrenome"
+            android:maxLines="1"/>
     </LinearLayout>
 
     <Spinner
@@ -51,7 +53,8 @@
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:id="@+id/txtEmail"
-        android:hint="Email - Ex:pessoa@pessoa.com"
+        android:hint="Email"
+        android:maxLines="1"
         />
 
     <EditText
@@ -62,7 +65,8 @@
         android:layout_marginLeft="20dp"
         android:inputType="textPassword"
         android:hint="Senha"
-        android:id="@+id/txtSenha"/>
+        android:id="@+id/txtSenha"
+        android:maxLines="1"/>
     <Button
         android:id="@+id/btCadastrar"
         android:layout_width="wrap_content"

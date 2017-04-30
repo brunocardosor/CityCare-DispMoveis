@@ -64,8 +64,7 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 
     }
 
-    public void login(String email, String senha, Context context) {
-        try {
+    public boolean login(String email, String senha) {
             SQLiteDatabase db = getWritableDatabase();
             Cursor c = db.query("usuario", null, "email_usuario='" + email + "'", null, null, null, null);
             List<Usuario> usuarios = listar(c);
@@ -74,13 +73,9 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
                 if (usuarios.get(0).isStatus() == true) {
                     UsuarioSingleton us = new UsuarioSingleton();
                     us.setInstance(usuarios.get(0));
-                    Intent i = new Intent(context, FeedActivity.class);
-
-                }
-            }
-        } catch (Exception ex) {
-            Log.e("LOGIN", ex.getMessage());
-        }
+                    return true;
+                } return false;
+            } return false;
     }
 
 
