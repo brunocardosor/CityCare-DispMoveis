@@ -128,10 +128,9 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+
     private void attemptLogin() {
-
-        TextView tvErro = new TextView(this);
-
+        TextView tvErro = (TextView) findViewById(R.id.tvErro);
         // Store values at the time of the login attempt
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
@@ -146,25 +145,25 @@ public class LoginActivity extends AppCompatActivity {
             mEmailView.setError(getString(R.string.error_invalid_email));
         }
 
+        // Check for a valid password, if the user entered one.
         if(TextUtils.isEmpty(password)){
             mPasswordView.setError(getString(R.string.error_field_required));
         }
-        // Check for a valid password, if the user entered one.
+
         else if (!isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
-        } if(userD.login(email,password)){
+        }
+
+        else if(userD.login(email,password)){
             Intent i = new Intent(LoginActivity.this, FeedActivity.class);
             startActivity(i);
-        } else {
+        }
+
+        else {
             Animation a = AnimationUtils.loadAnimation(this,android.R.anim.fade_in);
-            tvErro.setPadding(16,16,16,16);
-            tvErro.setTextSize(20);
             tvErro.setAnimation(a);
-            tvErro.setGravity(Gravity.CENTER);
             tvErro.setText(getString(R.string.error_incorrect_password_or_email));
             tvErro.setTextColor(Color.RED);
-            LinearLayout loginLayout = (LinearLayout) findViewById(R.id.email_login_form);
-            loginLayout.addView(tvErro);
         }
     }
 
@@ -176,94 +175,6 @@ public class LoginActivity extends AppCompatActivity {
     private boolean isPasswordValid(String password) {
         return password.length() > 7;
     }
-
-    /**
-     * Shows the progress UI and hides the login form.
-     */
-    /*@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
-*//*
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final String mEmail;
-        private final String mPassword;
-
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
-            return true;
-        }
-
-       @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                finish();
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password_or_email));
-                mPasswordView.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
-        }*/
-    }
+}
 
 

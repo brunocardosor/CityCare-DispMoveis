@@ -63,6 +63,14 @@
 
             </android.support.design.widget.TextInputLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="20dp"
+                android:id="@+id/tvErro"
+                android:textAlignment="center"/>
+
             <Button
                 android:id="@+id/btLogin"
                 style="?android:textAppearanceSmall"
