@@ -7,77 +7,94 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+        <LinearLayout
+            android:id="@+id/form_cadastro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="20dp"
+            android:weightSum="2">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nome"
+                    android:id="@+id/txtNome"
+                    android:maxLines="1"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Sobrenome"
+                    android:id="@+id/txtSobrenome"
+                    android:maxLines="1"/>
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
     <LinearLayout
-        android:id="@+id/form_cadastro"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:layout_margin="20dp">
-
-        <EditText
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Nome"
-            android:id="@+id/txtNome"
-            android:maxLines="1"/>
-
-        <EditText
+            android:id="@+id/spinEstado"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            />
+        <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Sobrenome"
-            android:id="@+id/txtSobrenome"
-            android:maxLines="1"/>
+            android:id="@+id/spinCidade"
+            android:layout_margin="20dp"
+            android:clickable="false"/>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/txtEmail"
+                android:hint="Email"
+                android:maxLines="1"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:inputType="textPassword"
+                android:hint="Senha"
+                android:id="@+id/txtSenha"
+                android:maxLines="1"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btCadastrar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="  Cadastrar  "
+            android:background="@android:color/holo_blue_dark"
+            android:textColor="@android:color/background_light"
+            android:layout_gravity="center"/>
     </LinearLayout>
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinEstado"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        />
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinCidade"
-        android:layout_margin="20dp"
-        android:clickable="false"/>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:id="@+id/txtEmail"
-        android:hint="Email"
-        android:maxLines="1"
-        />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:inputType="textPassword"
-        android:hint="Senha"
-        android:id="@+id/txtSenha"
-        android:maxLines="1"/>
-    <Button
-        android:id="@+id/btCadastrar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:text="  Cadastrar  "
-        android:background="@android:color/holo_blue_dark"
-        android:textColor="@android:color/background_light"
-        android:layout_gravity="center"/>
-
-
-
-
 </LinearLayout>

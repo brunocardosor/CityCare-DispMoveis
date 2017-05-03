@@ -1,4 +1,4 @@
-package Modelo;
+package br.edu.leaosampaio.CityCare.Modelo;
 
 import java.util.Calendar;
 

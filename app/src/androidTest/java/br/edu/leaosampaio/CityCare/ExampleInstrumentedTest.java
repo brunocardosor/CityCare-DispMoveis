@@ -1,4 +1,4 @@
-package br.edu.leaosampaio.Activities;
+package br.edu.leaosampaio.CityCare;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

@@ -1,54 +1,27 @@
-package br.edu.leaosampaio.Activities;
+package br.edu.leaosampaio.CityCare.Activity;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
 
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
-
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
-import android.text.style.TextAppearanceSpan;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import DAO.UsuarioDAO;
-
-import static android.Manifest.permission.READ_CONTACTS;
+import br.edu.leaosampaio.CityCare.DAO.UsuarioDAO;
+import br.edu.leaosampaio.CityCare.R;
 
 /**
  * A login screen that offers login via email/password.
@@ -75,8 +48,6 @@ public class LoginActivity extends AppCompatActivity {
     // UI references.
     private EditText mEmailView;
     private EditText mPasswordView;
-    private View mProgressView;
-    private View mLoginFormView;
 
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"; //String com sintaxe do Regex
@@ -122,10 +93,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(i);
             }
         }));
-
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
-
     }
 
 
@@ -162,6 +129,8 @@ public class LoginActivity extends AppCompatActivity {
         else {
             Animation a = AnimationUtils.loadAnimation(this,android.R.anim.fade_in);
             tvErro.setAnimation(a);
+            tvErro.setPadding(16,16,16,16);
+            tvErro.setTextSize(20);
             tvErro.setText(getString(R.string.error_incorrect_password_or_email));
             tvErro.setTextColor(Color.RED);
         }

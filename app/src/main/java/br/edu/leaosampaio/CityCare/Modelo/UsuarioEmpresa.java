@@ -1,4 +1,4 @@
-package Modelo;
+package br.edu.leaosampaio.CityCare.Modelo;
 
 /**
  * Created by lenilson on 30/04/17.

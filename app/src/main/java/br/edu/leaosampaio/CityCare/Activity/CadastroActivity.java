@@ -1,25 +1,21 @@
-package br.edu.leaosampaio.Activities;
+package br.edu.leaosampaio.CityCare.Activity;
 
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import DAO.UsuarioDAO;
-import Modelo.Usuario;
+import br.edu.leaosampaio.CityCare.DAO.UsuarioDAO;
+import br.edu.leaosampaio.CityCare.Modelo.Usuario;
+import br.edu.leaosampaio.CityCare.R;
 
 public class CadastroActivity extends AppCompatActivity{
 

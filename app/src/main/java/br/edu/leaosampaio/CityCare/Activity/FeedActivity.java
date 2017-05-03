@@ -1,10 +1,11 @@
-package br.edu.leaosampaio.Activities;
+package br.edu.leaosampaio.CityCare.Activity;
 
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
+
+import br.edu.leaosampaio.CityCare.R;
 
 
 public class FeedActivity extends AppCompatActivity {
@@ -16,12 +17,14 @@ public class FeedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
 
-        int cor = getBaseContext().getResources().getColor(android.R.color.white);
+
 
         mTabLayout = (TabLayout) findViewById(R.id.mTabLayout);
-        mTabLayout.setTabTextColors(cor,cor);
+        mTabLayout.setTabTextColors(android.R.color.white,android.R.color.white);
 
         ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+        actionBar.setTitle("");
 
     }
 }

@@ -1,4 +1,4 @@
-package br.edu.leaosampaio.Activities;
+package br.edu.leaosampaio.CityCare;
 
 import org.junit.Test;
 

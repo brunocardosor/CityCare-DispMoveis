@@ -1,4 +1,4 @@
-package DAO;
+package br.edu.leaosampaio.CityCare.DAO;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
