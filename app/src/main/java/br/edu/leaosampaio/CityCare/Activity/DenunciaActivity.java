@@ -14,8 +14,5 @@ public class DenunciaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_denuncia);
 
         getActionBar().setTitle("Denuncia");
-
-
-
     }
 }
