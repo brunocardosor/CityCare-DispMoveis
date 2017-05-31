@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="br.edu.leaosampaio.CityCare.Activity.LoginActivity"
+            android:name=".Activity.LoginActivity"
             android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,8 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="br.edu.leaosampaio.CityCare.Activity.CadastroActivity" />
-        <activity android:name="br.edu.leaosampaio.CityCare.Activity.FeedActivity"></activity>
+        <activity android:name=".Activity.CadastroActivity" />
+        <activity android:name=".Activity.FeedActivity" />
+        <activity android:name=".Activity.DenunciaActivity"></activity>
     </application>
 
 </manifest>
