@@ -1,8 +1,11 @@
 package br.edu.leaosampaio.CityCare.DAO;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.List;
 
 /**
  * Created by lenilson on 21/04/17.
@@ -12,7 +15,7 @@ public abstract class GenericDAO<T> extends SQLiteOpenHelper{
 
     private static final String NOME_BANCO = "CityCareDB";
     private static final int VERSAO = 2;
-    private String tabela[] = {"usuario", "denuncia", "categoria"};
+    private String tabela[] = {"usuario", "categoria", "denuncia"};
 
     public GenericDAO(Context context){
         super(context,NOME_BANCO,null,VERSAO);
@@ -57,4 +60,5 @@ public abstract class GenericDAO<T> extends SQLiteOpenHelper{
     public abstract void delete(T t, Context c);
 
     public abstract void atualizar(T t, Context c);
+
 }
