@@ -1,5 +1,6 @@
 package br.edu.leaosampaio.CityCare.Activity;
 
+import android.graphics.Color;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,8 +35,11 @@ public class DenunciaActivity extends AppCompatActivity {
     }
 
     private void cadastrarDenuncia(Denuncia denuncia) {
-        if (spinCategoria.getSelectedItem() == 0) {
-
+        if (spinCategoria.getSelectedItemId() == 0) {
+            EditText errorEditText = (EditText) spinCategoria.getSelectedView();
+            errorEditText.setError("Campo Obrigatório");
+            errorEditText.setTextColor(Color.RED);
+            errorEditText.setText("Campo Obrigatório");
         } else if(TextUtils.isEmpty(descricao.getText().toString())){
             descricao.setError("Campo Obrigatório");
         }

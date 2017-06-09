@@ -77,7 +77,7 @@ public class CadastroActivity extends AppCompatActivity{
 
         if(spinCidade.getSelectedItemPosition() == 0){
             TextView errorTextCidade = (TextView) spinCidade.getSelectedView();
-            errorTextCidade.setError(getString(R.string.error_field_required));
+            errorTextCidade.setError(   getString(R.string.error_field_required));
             errorTextCidade.setTextColor(Color.RED);
             errorTextCidade.setText(getString(R.string.error_field_required));
         }

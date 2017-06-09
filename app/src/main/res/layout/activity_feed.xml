@@ -1,21 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.TabLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="top"
-    android:background="@color/colorPrimary"
-    android:id="@+id/mTabLayout">
-    
-    <android.support.design.widget.TabItem
-        android:text="Home"/>
+    android:id="@+id/mFeedLayout"
+    android:orientation="vertical">
 
-    <android.support.design.widget.TabItem
-        android:text="Maps"/>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/mTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        app:tabBackground="@color/colorPrimary"
+        app:tabIndicatorColor="@color/cardview_light_background"
+        app:tabSelectedTextColor="@color/cardview_light_background"
+        app:tabTextColor="@color/cardview_light_background">
 
-    <android.support.design.widget.TabItem
-        android:text="Perfil" />
+        <android.support.design.widget.TabItem android:text="Home" />
 
-    
-</android.support.design.widget.TabLayout>
+        <android.support.design.widget.TabItem android:text="Maps" />
+
+        <android.support.design.widget.TabItem android:text="Perfil" />
+    </android.support.design.widget.TabLayout>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingMensagem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_write"
+            app:rippleColor="@color/cardview_shadow_end_color" />
+
+    </FrameLayout>
+
+</RelativeLayout>
