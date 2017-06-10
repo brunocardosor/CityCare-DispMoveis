@@ -13,10 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
-        app:tabBackground="@color/colorPrimary"
-        app:tabIndicatorColor="@color/cardview_light_background"
-        app:tabSelectedTextColor="@color/cardview_light_background"
-        app:tabTextColor="@color/cardview_light_background">
+        app:tabBackground="@color/colorAccent"
+        app:tabIndicatorColor="@color/colorPrimary"
+        app:tabSelectedTextColor="@color/colorPrimary"
+        app:tabTextColor="@color/colorDetails">
 
         <android.support.design.widget.TabItem android:text="Home" />
 

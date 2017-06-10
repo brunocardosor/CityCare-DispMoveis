@@ -10,6 +10,7 @@ public class Denuncia {
 
     private Long id;
     private String descricao;
+    private String localizacao;
     private Categoria categoria;
     private Usuario usuario;
     private String dataHora;
@@ -28,6 +29,18 @@ public class Denuncia {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public String getLocalizacao() {
+        return localizacao;
+    }
+
+    public void setLocalizacao(String localizacao) {
+        this.localizacao = localizacao;
+    }
+
+    public void setDataHora(String dataHora) {
+        this.dataHora = dataHora;
     }
 
     public Categoria getCategoria() {

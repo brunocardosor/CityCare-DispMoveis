@@ -14,7 +14,7 @@ import java.util.List;
 public abstract class GenericDAO<T> extends SQLiteOpenHelper{
 
     private static final String NOME_BANCO = "CityCareDB";
-    private static final int VERSAO = 2;
+    private static final int VERSAO = 3;
     private String tabela[] = {"usuario", "categoria", "denuncia"};
 
     public GenericDAO(Context context){
@@ -42,11 +42,12 @@ public abstract class GenericDAO<T> extends SQLiteOpenHelper{
                 "denuncia_id_usuario INTEGER not null," +
                 "denuncia_id_categoria INTEGER not null," +
                 "denuncia_descricao VARCHAR(400) not null," +
+                "denuncia_localizacao VARCHAR(200) not null" +
                 "denuncia_data_hora TEXT not null," +
                 "FOREIGN KEY(denuncia_id_usuario) REFERENCES "+ tabela[0] + "(id_"+tabela[0]+")," +
                 "FOREIGN KEY(denuncia_id_categoria) REFERENCES " + tabela[1] +"(id_"+tabela[1]+"));");
 
-        //db.execSQL("INSERT INTO " + tabela[1]+ "(descricao_categoria) VALUES('Buraco nas vias','Entulho na calçada/via pública','Limpeza urbana','Esgoto a céu aberto','Bloqueio na via','Estacionamento irregular','Ocupação irregular de área pública','Lâmpada apagada à noite','Mato alto','Bueiro entupido','Ponto de alagamento','Condição sanitária irregular','Calçada irregular','Falta de rampa de acessibilidade','Foco de dengue','Poluição sonora','Equipamento público danificado','Poda/retirada de árvore','Faixa de pedestre inexistente','Imóvel abandonado','Falta de energia','Falta de água','Iluminação pública irregular','Fiação irregular','Emissão de fumaça preta','Transporte Público Irregular','Placa de sinalização quebrada','Vazamento de água','Queimada irregular','Infestação de roedores','Ponto de assalto/roubo','Recuperação de estradas','Lâmpada acesa de dia','Estação de ônibus/trem/metrô danificada','Falta de assentos na sala de embarque','Estabelecimento sem saída de emergência','Aterro sanitário irregular','Ar-condicionado com defeito','Ciclovia/ciclofaixa mal sinalizada','Ponto de tráfico de drogas','Demora na fila do check-in','Pesca ilegal','Serviço de Assistência Técnica','Cercamento de reserva legal','Ponto de ônibus danificado','Patrimônio histórico em risco','Tomada com defeito no aeroporto','Falta de táxi','Bicicletário danificado','Demora na entrega de bagagens em aeroporto','Lixeira quebrada','Estabelecimento sem nota fiscal','Calçada inexistente','Estádio danificado','Aeroporto com instalações danificadas','Semáforo quebrado','Metrô/trem danificado','Praia suja','Caça ilegal','Falta de carrinhos de bagagem','Estabelecimento sem alvará','Ônibus danificado','Desmatamento irregular','Aeroporto superlotado','Demora na fila do Raio X','Maus tratos a animais','Estabelecimento com acessibilidade irregular','Sanitário sujo no aeroporto','Painel de informação de vôos desligado/danificado','Acesso problemático ao estádio','Ônibus/trem/metrô superlotado','Desmatamento Ilegal','Caixa eletrônico com defeito','Veículo abandonado','Recuperação de Ponte','Poluição','Bueiro sem tampa','Atraso excessivo em voo','Estádio com acessibilidade irregular','Bagagem danificada','Presença de cambista em estádio','Sujeira no aeroporto','Ponto de prostituição de menores','Demora na entrega de bagagem','Utilização irregular de agrotóxico','Caça predatória','Passarela irregular');");
+        db.execSQL("INSERT INTO " + tabela[1]+ "(descricao_categoria) VALUES('Buraco nas vias','Entulho na calçada/via pública','Limpeza urbana','Esgoto a céu aberto','Bloqueio na via','Estacionamento irregular','Ocupação irregular de área pública','Lâmpada apagada à noite','Mato alto','Bueiro entupido','Ponto de alagamento','Condição sanitária irregular','Calçada irregular','Falta de rampa de acessibilidade','Foco de dengue','Poluição sonora','Equipamento público danificado','Poda/retirada de árvore','Faixa de pedestre inexistente','Imóvel abandonado','Falta de energia','Falta de água','Iluminação pública irregular','Fiação irregular','Emissão de fumaça preta','Transporte Público Irregular','Placa de sinalização quebrada','Vazamento de água','Queimada irregular','Infestação de roedores','Ponto de assalto/roubo','Recuperação de estradas','Lâmpada acesa de dia','Estação de ônibus/trem/metrô danificada','Falta de assentos na sala de embarque','Estabelecimento sem saída de emergência','Aterro sanitário irregular','Ar-condicionado com defeito','Ciclovia/ciclofaixa mal sinalizada','Ponto de tráfico de drogas','Demora na fila do check-in','Pesca ilegal','Serviço de Assistência Técnica','Cercamento de reserva legal','Ponto de ônibus danificado','Patrimônio histórico em risco','Tomada com defeito no aeroporto','Falta de táxi','Bicicletário danificado','Demora na entrega de bagagens em aeroporto','Lixeira quebrada','Estabelecimento sem nota fiscal','Calçada inexistente','Estádio danificado','Aeroporto com instalações danificadas','Semáforo quebrado','Metrô/trem danificado','Praia suja','Caça ilegal','Falta de carrinhos de bagagem','Estabelecimento sem alvará','Ônibus danificado','Desmatamento irregular','Aeroporto superlotado','Demora na fila do Raio X','Maus tratos a animais','Estabelecimento com acessibilidade irregular','Sanitário sujo no aeroporto','Painel de informação de vôos desligado/danificado','Acesso problemático ao estádio','Ônibus/trem/metrô superlotado','Desmatamento Ilegal','Caixa eletrônico com defeito','Veículo abandonado','Recuperação de Ponte','Poluição','Bueiro sem tampa','Atraso excessivo em voo','Estádio com acessibilidade irregular','Bagagem danificada','Presença de cambista em estádio','Sujeira no aeroporto','Ponto de prostituição de menores','Demora na entrega de bagagem','Utilização irregular de agrotóxico','Caça predatória','Passarela irregular');");
 
     }
 
@@ -55,10 +56,10 @@ public abstract class GenericDAO<T> extends SQLiteOpenHelper{
 
     }
 
-    public abstract void salvar(T t, Context c);
+    public abstract boolean salvar(T t, Context c);
 
-    public abstract void delete(T t, Context c);
+    public abstract boolean delete(T t, Context c);
 
-    public abstract void atualizar(T t, Context c);
+    public abstract boolean atualizar(T t, Context c);
 
 }

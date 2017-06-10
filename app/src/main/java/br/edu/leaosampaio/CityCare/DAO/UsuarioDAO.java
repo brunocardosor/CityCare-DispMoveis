@@ -25,7 +25,7 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 
 
     @Override
-    public void salvar(Usuario usuario, Context context) {
+    public boolean salvar(Usuario usuario, Context context) {
         SQLiteDatabase db = getWritableDatabase();
         try {
             db.execSQL("INSERT INTO usuario(nome_usuario,estado_usuario,cidade_usuario," +
@@ -34,26 +34,33 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
                     "','" + usuario.getEmail() + "','" + usuario.getSenha() + "','1');");
             Log.i("SALVAR", "Salvo com sucesso");
             Toast.makeText(context,"Cadastro efetuado com sucesso",Toast.LENGTH_SHORT).show();
-
+            return true;
         } catch (Exception ex){
             Log.e("SALVAR", ex.getMessage());
-            Toast.makeText(context,"ERRO!",Toast.LENGTH_SHORT).show();
-
+            Toast.makeText(context,ex.getMessage(),Toast.LENGTH_SHORT).show();
+            return false;
         }finally {
             db.close();
         }
     }
 
     @Override
-    public void delete(Usuario usuario, Context context) {
-        SQLiteDatabase db = getWritableDatabase();
-        db.delete("usuario","id_usuario", new String[]{String.valueOf(usuario.getId())});
-        Log.i("DELETE", "Usuário deletado");
+    public boolean delete(Usuario usuario, Context context) {
+        try{
+            SQLiteDatabase db = getWritableDatabase();
+            db.delete("usuario","id_usuario", new String[]{String.valueOf(usuario.getId())});
+            Log.i("DELETE", "Usuário deletado");
+            Toast.makeText(context,"Usuario Deletado", Toast.LENGTH_SHORT).show();
+            return true;
+        } catch (Exception ex) {
+            Toast.makeText(context, "ERRO!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
     }
 
     @Override
-    public void atualizar(Usuario usuario, Context context) {
-
+    public boolean atualizar(Usuario usuario, Context context) {
+            return false;
     }
 
     public boolean login(String email, String senha) {

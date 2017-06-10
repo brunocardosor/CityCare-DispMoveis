@@ -21,8 +21,6 @@ public class FeedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
 
-
-
         mTabLayout = (TabLayout) findViewById(R.id.mTabLayout);
         mTabLayout.setTabTextColors(android.R.color.white,android.R.color.white);
 
@@ -35,11 +33,5 @@ public class FeedActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
-
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
-        actionBar.setTitle("");
-
     }
 }
