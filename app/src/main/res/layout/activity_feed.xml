@@ -86,9 +86,14 @@
             app:fabSize="normal"
             app:rippleColor="@color/Transparente"
             app:srcCompat="@mipmap/ic_write" />
-
     </FrameLayout>
-    
+
+    <fragment
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:name="br.edu.leaosampaio.CityCare.Fragments.PostagensActivity"
+        tools:layout="@layout/activity_postagens"/>
+
     <FrameLayout
         android:id="@+id/nav_layout"
         android:layout_width="match_parent"
