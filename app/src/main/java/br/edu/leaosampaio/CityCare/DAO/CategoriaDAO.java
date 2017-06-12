@@ -61,18 +61,21 @@ public class CategoriaDAO extends GenericDAO<Categoria> {
     }
 
     public List<Categoria> buscar(){
-        Cursor c = db.rawQuery("SELECT * FROM CATEGORIA", null);
+        Cursor c = db.rawQuery("SELECT * FROM categoria", null);
         return listar(c);
     }
 
     private List<Categoria> listar(Cursor c) {
         List<Categoria> categorias = new ArrayList<>();
-        if(c.moveToFirst()){
-            Categoria categoria = new Categoria();
-            categorias.add(categoria);
-            categoria.setId(c.getLong(c.getColumnIndex("id_categoria")));
-            categoria.setDescricao(c.getString((c.getColumnIndex("descricao_categoria"))));
-        } while(c.moveToNext());
+        if(c.moveToFirst()) {
+            do {
+                Categoria categoria = new Categoria();
+                categorias.add(categoria);
+                categoria.setId(c.getLong(c.getColumnIndex("id_categoria")));
+                categoria.setDescricao(c.getString((c.getColumnIndex("descricao_categoria"))));
+
+            } while (c.moveToNext());
+        }
         return categorias;
     }
 }

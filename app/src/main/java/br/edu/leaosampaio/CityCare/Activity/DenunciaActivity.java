@@ -1,23 +1,25 @@
 package br.edu.leaosampaio.CityCare.Activity;
 
 import android.graphics.Color;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 import br.edu.leaosampaio.CityCare.DAO.CategoriaDAO;
 import br.edu.leaosampaio.CityCare.DAO.DenunciaDAO;
 import br.edu.leaosampaio.CityCare.Modelo.Categoria;
 import br.edu.leaosampaio.CityCare.Modelo.Denuncia;
-import br.edu.leaosampaio.CityCare.Modelo.UsuarioSingleton;
+import br.edu.leaosampaio.CityCare.Modelo.Usuario;
+import br.edu.leaosampaio.CityCare.Modelo.UsuarioAplication;
 import br.edu.leaosampaio.CityCare.R;
 
 
@@ -28,8 +30,10 @@ public class DenunciaActivity extends AppCompatActivity {
     private ImageButton btEnviar;
     private EditText localizacao;
 
-    CategoriaDAO categorias = new CategoriaDAO(this);
+
     Denuncia den = new Denuncia();
+    DenunciaDAO denunciaDAO = new DenunciaDAO(this);
+    UsuarioAplication usuarioAplication = UsuarioAplication.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,19 +45,25 @@ public class DenunciaActivity extends AppCompatActivity {
         localizacao = (EditText) findViewById(R.id.edtLocalizacao);
         btEnviar = (ImageButton) findViewById(R.id.btEnviar);
 
-
-
+        CategoriaDAO categorias = new CategoriaDAO(this);
         ArrayAdapter<Categoria> adapter = new ArrayAdapter<Categoria>(DenunciaActivity.this, android.R.layout.simple_spinner_dropdown_item, categorias.buscar());
         spinCategoria.setAdapter(adapter);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Denunciar");
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        setTitle("Denunciar");
 
         btEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 cadastrarDenuncia(den);
+            }
+        });
+
+        localizacao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(DenunciaActivity.this, "ABRIRÁ O MAPA", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -62,21 +72,20 @@ public class DenunciaActivity extends AppCompatActivity {
 
     private void cadastrarDenuncia(Denuncia denuncia) {
         if (spinCategoria.getSelectedItemId() == 0) {
-            EditText errorEditText = (EditText) spinCategoria.getSelectedView();
-            errorEditText.setError("Campo Obrigatório");
-            errorEditText.setTextColor(Color.RED);
-            errorEditText.setText("Campo Obrigatório");
+            TextView errorTextView = (TextView) spinCategoria.getSelectedView();
+            errorTextView.setError("Campo Obrigatório");
+            errorTextView.setTextColor(Color.RED);
+            errorTextView.setText("Campo Obrigatório");
         } if(TextUtils.isEmpty(descricao.getText().toString())){
             descricao.setError("Campo Obrigatório");
         } if(TextUtils.isEmpty(localizacao.getText().toString())){
             descricao.setError("Campo Obrigatório");
         } else {
-            UsuarioSingleton usrSingleton = new UsuarioSingleton();
-            DenunciaDAO denunciaDAO = new DenunciaDAO(DenunciaActivity.this);
+            denunciaDAO = new DenunciaDAO(DenunciaActivity.this);
             denuncia.setDescricao(descricao.getText().toString());
             denuncia.setCategoria((Categoria) spinCategoria.getSelectedItem());
             denuncia.setDataHora();
-            denuncia.setUsuario(usrSingleton.getInstance());
+            denuncia.setUsuario(usuarioAplication.getUsuario());
             denuncia.setLocalizacao(localizacao.getText().toString());
             if(denunciaDAO.salvar(denuncia, DenunciaActivity.this)){
                 finish();
@@ -89,11 +98,9 @@ public class DenunciaActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home){
-            finish();
-        }
-        return super.onOptionsItemSelected(item);
+    public void backOnClickListener(View view) {
+        finish();
     }
+
+
 }

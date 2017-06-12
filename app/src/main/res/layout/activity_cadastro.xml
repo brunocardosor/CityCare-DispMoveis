@@ -7,6 +7,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/toolbar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <LinearLayout
             android:id="@+id/form_cadastro"
             android:layout_width="match_parent"
@@ -66,6 +75,7 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
+                android:inputType="textEmailAddress"
                 android:id="@+id/txtEmail"
                 android:hint="Email"
                 android:maxLines="1"
@@ -96,5 +106,7 @@
             android:background="@android:color/holo_blue_dark"
             android:textColor="@android:color/background_light"
             android:layout_gravity="center"/>
+        </LinearLayout>
     </LinearLayout>
+    </ScrollView>
 </LinearLayout>

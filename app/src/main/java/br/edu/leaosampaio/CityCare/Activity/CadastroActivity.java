@@ -3,8 +3,11 @@ package br.edu.leaosampaio.CityCare.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,8 +67,10 @@ public class CadastroActivity extends AppCompatActivity{
         ArrayAdapter<String> cidades = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,cidade);
         spinCidade.setAdapter(cidades);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Cadastro");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        setTitle("Cadastro");
+
     }
 
     public void UsuarioCadastrar() {
@@ -151,5 +156,9 @@ public class CadastroActivity extends AppCompatActivity{
 
     private boolean isPasswordValid(String password) {
         return password.length() > 7;
+    }
+
+    public void backOnClickListener(View view) {
+        finish();
     }
 }

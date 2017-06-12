@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.leaosampaio.CityCare.Modelo.Usuario;
-import br.edu.leaosampaio.CityCare.Modelo.UsuarioSingleton;
+import br.edu.leaosampaio.CityCare.Modelo.UsuarioAplication;
 
 /**
  * Created by lenilson on 21/04/17.
@@ -19,10 +19,9 @@ import br.edu.leaosampaio.CityCare.Modelo.UsuarioSingleton;
 public class UsuarioDAO extends GenericDAO<Usuario> {
     public UsuarioDAO(Context context) {
         super(context);
-
     }
 
-
+    UsuarioAplication usuarioAplication = UsuarioAplication.getInstance();
 
     @Override
     public boolean salvar(Usuario usuario, Context context) {
@@ -70,8 +69,7 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
             if (usuarios.size() == 1 && usuarios.get(0).getEmail().equals(email) && usuarios.get(0).getSenha().equals(senha)) {
                 //verifica se o usuário está ativo
                 if (usuarios.get(0).isStatus() == true) {
-                    UsuarioSingleton us = new UsuarioSingleton();
-                    us.setInstance(usuarios.get(0));
+                    usuarioAplication.setUsuario(usuarios.get(0));
                     return true;
                 } return false;
             } return false;

@@ -7,10 +7,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import br.edu.leaosampaio.CityCare.Activity.DenunciaActivity;
-import br.edu.leaosampaio.CityCare.Modelo.Categoria;
 import br.edu.leaosampaio.CityCare.Modelo.Denuncia;
-import br.edu.leaosampaio.CityCare.Modelo.UsuarioSingleton;
 
 /**
  * Created by lab1-20 on 05/06/17.
@@ -26,10 +23,12 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
     @Override
     public boolean salvar(Denuncia denuncia, Context c) {
         try{
-            db.execSQL("INSERT INTO denuncia(denuncia_id_usuario, denuncia_id_categoria, denuncia_descricao, denuncia_localizacao, denuncia_data_hora)" +
-                    "values(?,?,?,?,?)" +
-                new Object[] {denuncia.getUsuario().getId(), denuncia.getCategoria().getId(), denuncia.getDescricao(), denuncia.getLocalizacao(),
-                denuncia.getDataHora()});
+            db.rawQuery("INSERT INTO denuncia(denuncia_id_usuario, denuncia_id_categoria, denuncia_descricao, denuncia_localizacao, denuncia_data_hora)" +
+                    "values('" + denuncia.getUsuario().getId() + "'," +
+                    "'"+ denuncia.getCategoria().getId() + "'," +
+                    "'"+ denuncia.getDescricao() +"'," +
+                    "'"+ denuncia.getLocalizacao() +"'," +
+                    "'"+ denuncia.getDataHora() +"')", null);
             Log.i("SALVAR", "Salvo com Sucesso");
             return true;
         } catch (Exception ex){

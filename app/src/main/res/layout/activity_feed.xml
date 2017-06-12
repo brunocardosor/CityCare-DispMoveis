@@ -1,43 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
     android:id="@+id/mFeedLayout"
-    android:orientation="vertical">
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/mTabLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="visible">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        app:tabBackground="@color/colorAccent"
-        app:tabIndicatorColor="@color/colorPrimary"
-        app:tabSelectedTextColor="@color/colorPrimary"
-        app:tabTextColor="@color/colorDetails">
+        android:orientation="vertical">
 
-        <android.support.design.widget.TabItem android:text="Home" />
 
-        <android.support.design.widget.TabItem android:text="Maps" />
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/toolbarFeed"
+            android:background="@color/colorAccent"
+            android:minHeight="?attr/actionBarSize">
 
-        <android.support.design.widget.TabItem android:text="Perfil" />
-    </android.support.design.widget.TabLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="18dp">
 
+                <ImageView
+                    android:id="@+id/LogoView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/citycare_logo_toolbar" />
+
+                <ImageButton
+                    android:id="@+id/optionsList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:background="@color/Transparente"
+                    app:srcCompat="@drawable/ic_list" />
+
+                <ImageButton
+                    android:id="@+id/search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/Transparente"
+                    app:srcCompat="@drawable/ic_search" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/mTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            app:tabBackground="@color/colorAccent"
+            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabTextColor="@color/colorDetails">
+
+            <android.support.design.widget.TabItem android:icon="@drawable/ic_web" />
+
+            <android.support.design.widget.TabItem android:icon="@drawable/ic_map" />
+
+            <android.support.design.widget.TabItem android:icon="@drawable/ic_person" />
+        </android.support.design.widget.TabLayout>
+    </LinearLayout>
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="20dp">
+        android:layout_alignParentRight="true"
+        android:padding="20dp">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingMensagem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_write"
-            app:rippleColor="@color/cardview_shadow_end_color" />
+            />
 
     </FrameLayout>
 
