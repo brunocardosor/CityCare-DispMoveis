@@ -1,6 +1,7 @@
 package br.edu.leaosampaio.CityCare.Fragments;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import br.edu.leaosampaio.CityCare.DAO.DenunciaDAO;
 import br.edu.leaosampaio.CityCare.Modelo.Denuncia;
 import br.edu.leaosampaio.CityCare.R;
 
@@ -17,10 +19,11 @@ import br.edu.leaosampaio.CityCare.R;
  * Created by lenilson on 12/06/17.
  */
 
-public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostsViewHolder> {
+public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostsViewHolder>{
 
-    private final List<Denuncia> denuncias;
     private final Context context;
+    DenunciaDAO denunciaDAO = new DenunciaDAO(null);
+    private List<Denuncia> denuncias = denunciaDAO.buscar();
 
     public PostAdapter(List<Denuncia> denuncias, Context context) {
         this.denuncias = denuncias;
@@ -37,7 +40,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostsViewHolde
 
     @Override
     public void onBindViewHolder(PostsViewHolder holder, int position) {
-     Denuncia d = denuncias.get(position);
+        Denuncia d = denuncias.get(position);
         holder.tvUsuario.setText(d.getUsuario().toString());
         holder.tvData.setText(d.getDataHora());
         holder.tvCategoria.setText(d.getCategoria().toString());

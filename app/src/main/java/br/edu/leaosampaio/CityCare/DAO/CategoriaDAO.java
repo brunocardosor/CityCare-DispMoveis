@@ -66,14 +66,13 @@ public class CategoriaDAO extends GenericDAO<Categoria> {
     }
 
     private List<Categoria> listar(Cursor c) {
-        List<Categoria> categorias = new ArrayList<>();
+        List<Categoria> categorias = new ArrayList<Categoria>();
         if(c.moveToFirst()) {
             do {
                 Categoria categoria = new Categoria();
                 categorias.add(categoria);
                 categoria.setId(c.getLong(c.getColumnIndex("id_categoria")));
                 categoria.setDescricao(c.getString((c.getColumnIndex("descricao_categoria"))));
-
             } while (c.moveToNext());
         }
         return categorias;

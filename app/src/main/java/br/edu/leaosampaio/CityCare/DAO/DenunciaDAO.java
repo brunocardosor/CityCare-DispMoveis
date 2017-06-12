@@ -1,13 +1,17 @@
 package br.edu.leaosampaio.CityCare.DAO;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.leaosampaio.CityCare.Modelo.Categoria;
 import br.edu.leaosampaio.CityCare.Modelo.Denuncia;
+import br.edu.leaosampaio.CityCare.Modelo.Usuario;
 
 /**
  * Created by lab1-20 on 05/06/17.
@@ -40,8 +44,41 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
         }
     }
 
-    public List<Denuncia> listar(){
-        return null;
+    public List<Denuncia> buscar(){
+        Cursor c = db.rawQuery("SELECT * FROM denuncias a ORDER BY id_denuncias asc INNER JOIN usuario b ON a.denuncia_id_usuario = b.id_usuario" +
+                "INNER JOIN categoria c ON a.denuncia_id_categoria = c.id_categoria",null);
+
+        return listar(c);
+    }
+
+    private List<Denuncia> listar(Cursor c){
+        List<Denuncia> denuncias = new ArrayList<Denuncia>();
+        if(denuncias != null){
+            if(c.moveToFirst()) {
+                do {
+                    Denuncia denuncia = new Denuncia();
+                    Categoria categoria = new Categoria();
+                    Usuario usuario = new Usuario();
+
+                    denuncias.add(denuncia);
+
+                    categoria.setId(c.getLong(c.getColumnIndex("id_categoria")));
+                    categoria.setDescricao(c.getString(c.getColumnIndex("descricao_categoria")));
+
+                    usuario.setId(c.getLong(c.getColumnIndex("id_usuario")));
+                    usuario.setNome(c.getString(c.getColumnIndex("nome_usuario")));
+                    usuario.setCidade(c.getString(c.getColumnIndex("cidade_usuario")));
+                    usuario.setEstado(c.getString(c.getColumnIndex("estado_usuario")));
+
+                    denuncia.setCategoria(categoria);
+                    denuncia.setUsuario(usuario);
+                    denuncia.setId(c.getLong(c.getColumnIndex("id_denuncia")));
+                    denuncia.setDescricao(c.getString(c.getColumnIndex("denuncia_descricao")));
+                    denuncia.setLocalizacao(c.getString(c.getColumnIndex("denuncia_localizacao")));
+                    denuncia.setDataHora(c.getString(c.getColumnIndex("denuncia_data_hora")));
+                } while (c.moveToNext());
+            }   return denuncias;
+        }   return null;
     }
 
     @Override
