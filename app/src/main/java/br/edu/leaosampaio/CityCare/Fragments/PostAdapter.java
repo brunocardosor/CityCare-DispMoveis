@@ -22,7 +22,7 @@ import br.edu.leaosampaio.CityCare.R;
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostsViewHolder>{
 
     private final Context context;
-    DenunciaDAO denunciaDAO = new DenunciaDAO(null);
+    DenunciaDAO denunciaDAO;
     private List<Denuncia> denuncias = denunciaDAO.buscar();
 
     public PostAdapter(List<Denuncia> denuncias, Context context) {
@@ -50,7 +50,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostsViewHolde
 
     @Override
     public int getItemCount() {
-        return this.denuncias != null ? this.denuncias.size() : 0;
+        return denuncias.size();
     }
 
     public class PostsViewHolder extends RecyclerView.ViewHolder{

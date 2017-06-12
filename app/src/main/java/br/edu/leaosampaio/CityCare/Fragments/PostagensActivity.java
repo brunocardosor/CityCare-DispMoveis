@@ -17,7 +17,6 @@ import br.edu.leaosampaio.CityCare.R;
 public class PostagensActivity extends Fragment {
 
     protected RecyclerView recyclerView;
-    private List<Denuncia> denuncias;
     private LinearLayoutManager mLayoutManager;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
