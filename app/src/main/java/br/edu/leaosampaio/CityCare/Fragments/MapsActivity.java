@@ -1,4 +1,4 @@
-package br.edu.leaosampaio.citycare_dispmoveis;
+package br.edu.leaosampaio.CityCare.Fragments;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;

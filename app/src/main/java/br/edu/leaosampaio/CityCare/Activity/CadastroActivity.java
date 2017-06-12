@@ -69,8 +69,14 @@ public class CadastroActivity extends AppCompatActivity{
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("Cadastro");
-
+        toolbar.setTitle("Cadastro");
+        toolbar.setNavigationIcon(R.drawable.ic_action_arrow_back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     public void UsuarioCadastrar() {
@@ -129,25 +135,6 @@ public class CadastroActivity extends AppCompatActivity{
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (spinEstado.getSelectedItemPosition() != 0){
-            spinCidade.setClickable(true);
-        }
-
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home){
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     private boolean isEmailValid(String email) {
         Matcher matcher = pattern.matcher(email);
@@ -158,7 +145,4 @@ public class CadastroActivity extends AppCompatActivity{
         return password.length() > 7;
     }
 
-    public void backOnClickListener(View view) {
-        finish();
-    }
 }

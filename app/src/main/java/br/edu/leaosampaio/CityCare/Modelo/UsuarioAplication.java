@@ -9,7 +9,9 @@ import android.util.Log;
 
 public class UsuarioAplication extends Application {
 
-    private Usuario usuario;
+    private static Usuario usuario;
+    private static final String TAG = "UsuárioApplication";
+    private static UsuarioAplication instance = null;
 
     public Usuario getUsuario() {
         return usuario;
@@ -19,14 +21,12 @@ public class UsuarioAplication extends Application {
         this.usuario = usuario;
     }
 
-    private static final String TAG = "UsuárioApplication";
-    private static UsuarioAplication instance = null;
-
     public static UsuarioAplication getInstance(){
         return instance;
     }
 
-    public void OnCreate(){
+    public void onCreate(){
+        super.onCreate();
         Log.d(TAG, "UsuarioApplication.onCreate()");
         instance = this;
     }

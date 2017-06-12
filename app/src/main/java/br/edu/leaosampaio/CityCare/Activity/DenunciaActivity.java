@@ -30,9 +30,8 @@ public class DenunciaActivity extends AppCompatActivity {
     private ImageButton btEnviar;
     private EditText localizacao;
 
-
+    DenunciaDAO denunciaDAO;
     Denuncia den = new Denuncia();
-    DenunciaDAO denunciaDAO = new DenunciaDAO(this);
     UsuarioAplication usuarioAplication = UsuarioAplication.getInstance();
 
     @Override
@@ -51,7 +50,14 @@ public class DenunciaActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("Denunciar");
+        toolbar.setTitle("Denunciar");
+        toolbar.setNavigationIcon(R.drawable.ic_action_arrow_back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         btEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +85,7 @@ public class DenunciaActivity extends AppCompatActivity {
         } if(TextUtils.isEmpty(descricao.getText().toString())){
             descricao.setError("Campo Obrigatório");
         } if(TextUtils.isEmpty(localizacao.getText().toString())){
-            descricao.setError("Campo Obrigatório");
+            localizacao.setError("Campo Obrigatório");
         } else {
             denunciaDAO = new DenunciaDAO(DenunciaActivity.this);
             denuncia.setDescricao(descricao.getText().toString());
@@ -97,10 +103,4 @@ public class DenunciaActivity extends AppCompatActivity {
 
         }
     }
-
-    public void backOnClickListener(View view) {
-        finish();
-    }
-
-
 }
