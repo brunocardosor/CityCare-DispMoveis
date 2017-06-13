@@ -20,23 +20,26 @@
     <application
         android:name=".Modelo.UsuarioAplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activity.LoginActivity"
-            android:label="@string/title_activity_login">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.CadastroActivity" />
-        <activity android:name=".Activity.FeedActivity" />
-        <activity android:name=".Activity.DenunciaActivity" />
+        <activity android:name=".Activity.CadastroActivity"
+            android:label="Cadastro"/>
+        <activity android:name=".Activity.FeedActivity"
+           android:label=""/>
+        <activity android:name=".Activity.DenunciaActivity"
+            android:label="Denuncia"/>
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

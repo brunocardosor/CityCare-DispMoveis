@@ -27,13 +27,14 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
     @Override
     public boolean salvar(Denuncia denuncia, Context c) {
         try{
-            db.rawQuery("INSERT INTO denuncia(denuncia_id_usuario, denuncia_id_categoria, denuncia_descricao, denuncia_localizacao, denuncia_data_hora)" +
+            db.execSQL("INSERT INTO denuncia(denuncia_id_usuario, denuncia_id_categoria, denuncia_descricao, denuncia_localizacao, denuncia_data_hora)" +
                     "values('" + denuncia.getUsuario().getId() + "'," +
                     "'"+ denuncia.getCategoria().getId() + "'," +
                     "'"+ denuncia.getDescricao() +"'," +
                     "'"+ denuncia.getLocalizacao() +"'," +
-                    "'"+ denuncia.getDataHora() +"')", null);
+                    "'"+ denuncia.getDataHora() +"')");
             Log.i("SALVAR", "Salvo com Sucesso");
+            Toast.makeText(c, "SALVO", Toast.LENGTH_SHORT).show();
             return true;
         } catch (Exception ex){
             Log.e("SALVAR", ex.getMessage());
@@ -45,15 +46,14 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
     }
 
     public List<Denuncia> buscar(){
-        Cursor c = db.rawQuery("SELECT * FROM denuncias a ORDER BY id_denuncias asc INNER JOIN usuario b ON a.denuncia_id_usuario = b.id_usuario" +
-                "INNER JOIN categoria c ON a.denuncia_id_categoria = c.id_categoria",null);
+        Cursor c = db.rawQuery("SELECT * FROM denuncia a INNER JOIN categoria b ON a.denuncia_id_categoria = b.id_categoria INNER JOIN usuario c ON a.denuncia_id_usuario = c.id_usuario", null);
 
         return listar(c);
     }
 
     private List<Denuncia> listar(Cursor c){
         List<Denuncia> denuncias = new ArrayList<Denuncia>();
-        if(denuncias != null){
+        if(c != null){
             if(c.moveToFirst()) {
                 do {
                     Denuncia denuncia = new Denuncia();
@@ -61,6 +61,11 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
                     Usuario usuario = new Usuario();
 
                     denuncias.add(denuncia);
+
+                    denuncia.setId(c.getLong(c.getColumnIndex("id_denuncia")));
+                    denuncia.setDescricao(c.getString(c.getColumnIndex("denuncia_descricao")));
+                    denuncia.setLocalizacao(c.getString(c.getColumnIndex("denuncia_localizacao")));
+                    denuncia.setDataHora(c.getString(c.getColumnIndex("denuncia_data_hora")));
 
                     categoria.setId(c.getLong(c.getColumnIndex("id_categoria")));
                     categoria.setDescricao(c.getString(c.getColumnIndex("descricao_categoria")));
@@ -72,10 +77,7 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
 
                     denuncia.setCategoria(categoria);
                     denuncia.setUsuario(usuario);
-                    denuncia.setId(c.getLong(c.getColumnIndex("id_denuncia")));
-                    denuncia.setDescricao(c.getString(c.getColumnIndex("denuncia_descricao")));
-                    denuncia.setLocalizacao(c.getString(c.getColumnIndex("denuncia_localizacao")));
-                    denuncia.setDataHora(c.getString(c.getColumnIndex("denuncia_data_hora")));
+
                 } while (c.moveToNext());
             }   return denuncias;
         }   return null;
