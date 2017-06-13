@@ -13,8 +13,7 @@ import android.view.View;
 import br.edu.leaosampaio.CityCare.R;
 
 
-public class FeedActivity extends FragmentActivity {
-    AppCompatActivity appCompatActivity;
+public class FeedActivity extends AppCompatActivity {
     Toolbar toolbar;
     FloatingActionButton floatingActionButton;
     TabLayout tabLayout;
@@ -28,7 +27,7 @@ public class FeedActivity extends FragmentActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbarFeed);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingMensagem);
 
-        appCompatActivity.setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
 
         toolbar.setNavigationIcon(R.drawable.ic_list);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
