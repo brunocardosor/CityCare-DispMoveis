@@ -24,25 +24,36 @@ import br.edu.leaosampaio.CityCare.R;
 
 public class PostagensFragment extends Fragment {
 
-
+    private RecyclerView recyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.postagem_fragment, container, false);
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.post_recyclerView);
+        recyclerView = (RecyclerView) view.findViewById(R.id.post_recyclerView);
 
-        DenunciaDAO denunciaDAO = new DenunciaDAO(getContext());
-
-        List<Denuncia> denuncias = denunciaDAO.buscar();
-
-        recyclerView.setAdapter(new PostAdapter(denuncias, getContext()));
+        preenche();
 
         LinearLayoutManager layout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
         recyclerView.setLayoutManager(layout);
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        preenche();
+    }
+
+    public void preenche(){
+
+        DenunciaDAO denunciaDAO = new DenunciaDAO(getContext());
+
+        List<Denuncia> denuncias = denunciaDAO.buscar();
+
+        recyclerView.setAdapter(new PostAdapter(denuncias, getContext()));
     }
 }

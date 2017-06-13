@@ -9,6 +9,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.leaosampaio.CityCare.Fragments.PostagensFragment;
 import br.edu.leaosampaio.CityCare.Modelo.Categoria;
 import br.edu.leaosampaio.CityCare.Modelo.Denuncia;
 import br.edu.leaosampaio.CityCare.Modelo.Usuario;
@@ -23,6 +24,7 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
     }
 
     SQLiteDatabase db = getWritableDatabase();
+    PostagensFragment postFrag;
 
     @Override
     public boolean salvar(Denuncia denuncia, Context c) {
@@ -86,12 +88,12 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
     @Override
     public boolean delete(Denuncia denuncia, Context c) {
         try{
-            db.delete("denuncia", "id_denuncia", new String[]{(String.valueOf(denuncia.getId()))});
+            db.execSQL("DELETE FROM denuncia WHERE id_denuncia='"+ denuncia.getId().toString() +"';");
             Toast.makeText(c, "Denuncia Deletada", Toast.LENGTH_SHORT).show();
             return true;
         } catch (Exception ex) {
             Log.e("DELETAR", ex.getMessage());
-            Toast.makeText(c, "ERRO", Toast.LENGTH_SHORT).show();
+            Toast.makeText(c, ex.getMessage(), Toast.LENGTH_SHORT).show();
             return false;
         } finally {
             db.close();

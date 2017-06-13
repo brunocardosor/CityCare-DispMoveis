@@ -33,6 +33,7 @@ public class DenunciaActivity extends AppCompatActivity {
     DenunciaDAO denunciaDAO;
     Denuncia den = new Denuncia();
     UsuarioAplication usuarioAplication = UsuarioAplication.getInstance();
+    Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +73,25 @@ public class DenunciaActivity extends AppCompatActivity {
                 Toast.makeText(DenunciaActivity.this, "ABRIRÁ O MAPA", Toast.LENGTH_SHORT).show();
             }
         });
+
+        /*if(bundle.getSerializable("denuncia") != null){
+            boolean posicao = false;
+
+            den = (Denuncia) bundle.getSerializable("denuncia");
+            descricao.setText(den.getDescricao());
+            localizacao.setText(den.getLocalizacao());
+
+            while(posicao){
+                for(int i = 0; i <= spinCategoria.getScrollBarSize(); i++){
+                    if(den.getCategoria().getDescricao() == spinCategoria.getItemAtPosition(i).toString()){
+                        spinCategoria.setSelection(i);
+                        posicao = true;
+                    }
+                }
+            }
+
+        }*/
+
     }
 
 

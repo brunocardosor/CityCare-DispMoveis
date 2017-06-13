@@ -1,12 +1,13 @@
 package br.edu.leaosampaio.CityCare.Modelo;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 /**
  * Created by lenilson on 22/04/17.
  */
 
-public class Denuncia {
+public class Denuncia implements Serializable{
 
     private Long id;
     private String descricao;

@@ -24,14 +24,28 @@
                 android:layout_alignParentLeft="true"
                 android:layout_margin="10dp"
                 android:textColor="@android:color/holo_blue_dark"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:text="Bruno Cardoso"
+                />
 
             <TextView
                 android:id="@+id/tvData"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/toolbarCard"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:gravity="right"
+                android:text="22/10/2017 07:38" />
+
+            <android.support.v7.widget.Toolbar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/toolbarCard"
                 android:layout_alignParentRight="true"
-                android:layout_margin="10dp" />
+                />
+
         </RelativeLayout>
 
         <LinearLayout
