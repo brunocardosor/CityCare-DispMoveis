@@ -111,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
             mPasswordView.setError(getString(R.string.error_invalid_password));
         }
 
+        //Codigo para direcionamento apos Login
         else if(userD.login(email,password)){
             Intent i = new Intent(LoginActivity.this, FeedActivity.class);
             startActivity(i);
