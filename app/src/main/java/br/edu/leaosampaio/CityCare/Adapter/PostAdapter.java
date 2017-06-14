@@ -59,46 +59,44 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostAdapterVie
         holder1.tvCategoria.setText(denuncia.getCategoria().toString());
         holder1.tvDescricao.setText(denuncia.getDescricao());
         holder1.tvLocalizacao.setText(denuncia.getLocalizacao());
-        if(denuncias.get(position).getUsuario() == UsuarioAplication.getInstance().getUsuario()){
-            holder1.toolbar.inflateMenu(R.menu.menu_card_post);
-            holder1.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    if (item.getItemId() == R.id.editPost) {
+        holder1.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.editPost) {
 
 
 
-                    }
-                    if (item.getItemId() == R.id.deletePost) {
-
-                        AlertDialog.Builder bilder = new AlertDialog.Builder(context);
-                        bilder.setMessage("Deseja apagar esta denúncia?");
-
-                        bilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                        bilder.setPositiveButton("Apagar", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                DenunciaDAO denunciaDAO = new DenunciaDAO(context);
-                                denunciaDAO.delete(denuncias.get(position), context);
-                                denuncias.remove(position);
-                                notifyDataSetChanged();
-                                denuncias = denunciaDAO.feedDenuncias();
-                                notifyDataSetChanged();
-                            }
-                        });
-                        bilder.show();
-                    }
-                    return true;
                 }
-            });
-        } else {
-            holder1.toolbar.setVisibility(View.GONE);
+                if (item.getItemId() == R.id.deletePost) {
+
+                    AlertDialog.Builder bilder = new AlertDialog.Builder(context);
+                    bilder.setMessage("Deseja apagar esta denúncia?");
+
+                    bilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    bilder.setPositiveButton("Apagar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            DenunciaDAO denunciaDAO = new DenunciaDAO(context);
+                            denunciaDAO.delete(denuncias.get(position), context);
+                            denuncias.remove(position);
+                            notifyDataSetChanged();
+                            denuncias = denunciaDAO.feedDenuncias();
+                            notifyDataSetChanged();
+                        }
+                    });
+                    bilder.show();
+                }
+                return true;
+            }
+        });
+        if(denuncias.get(position).getUsuario().getId() != UsuarioAplication.getInstance().getUsuario().getId()){
+            holder1.toolbar.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -126,6 +124,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostAdapterVie
             tvDescricao = (TextView) view.findViewById(R.id.tvDescricao);
             tvLocalizacao = (TextView) view.findViewById(R.id.tvLocalizacao);
             toolbar = (Toolbar) view.findViewById(R.id.toolbarCard);
+            toolbar.inflateMenu(R.menu.menu_card_post);
         }
     }
 }

@@ -57,7 +57,6 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
         }
     }
 
-    @Override
     public boolean atualizar(Usuario usuario, Context context) {
             return false;
     }

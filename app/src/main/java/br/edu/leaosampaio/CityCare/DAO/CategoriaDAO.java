@@ -56,7 +56,6 @@ public class CategoriaDAO extends GenericDAO<Categoria> {
         }
     }
 
-    @Override
     public boolean atualizar(Categoria categoria, Context c) {
         return false;
     }

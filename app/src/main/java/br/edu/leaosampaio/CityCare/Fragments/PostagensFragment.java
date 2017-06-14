@@ -32,7 +32,7 @@ public class PostagensFragment extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.post_recyclerView);
 
-        preencherFeed();
+        preencher();
 
         LinearLayoutManager layout = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
 
@@ -44,11 +44,10 @@ public class PostagensFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        preencherFeed();
+        preencher();
     }
 
-    public void preencherFeed(){
-
+    public void preencher(){
         DenunciaDAO denunciaDAO = new DenunciaDAO(getActivity());
 
         List<Denuncia> denuncias = denunciaDAO.feedDenuncias();

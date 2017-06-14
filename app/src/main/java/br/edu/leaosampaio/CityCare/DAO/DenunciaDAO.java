@@ -26,7 +26,7 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
         super(context);
     }
 
-    SQLiteDatabase db = getWritableDatabase();
+    final SQLiteDatabase db = getWritableDatabase();
 
     @Override
     public boolean salvar(Denuncia denuncia, Context c) {
@@ -45,8 +45,6 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
                 Log.e("SALVAR", ex.getMessage());
                 Toast.makeText(c, "ERRO!", Toast.LENGTH_SHORT).show();
                 return false;
-            } finally {
-                db.close();
             }
         } else {
             atualizar(denuncia,c);
@@ -118,23 +116,20 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
             Log.e("DELETAR", ex.getMessage());
             Toast.makeText(c, ex.getMessage(), Toast.LENGTH_SHORT).show();
             return false;
-        } finally {
-            db.close();
         }
     }
 
     private boolean atualizar(Denuncia denuncia, Context c){
         try{
-            db.execSQL("UPDATE INTO denuncia(deuncia_id_categoria, denuncia_descricao, denuncia_localizacao)" +
-                    " values('"+ denuncia.getCategoria()+"', '" + denuncia.getDescricao()+ "', '"+ denuncia.getLocalizacao()+ " )");
+            db.execSQL("UPDATE denuncia SET deuncia_id_categoria = '"+ denuncia.getCategoria()+"'," +
+                    "denuncia_descricao = '" + denuncia.getDescricao()+"'," +
+                    "denuncia_localizacao ='"+ denuncia.getLocalizacao()+"' WHERE id_denuncia='"+ denuncia.getId() +"')");
             Toast.makeText(c, "Denuncia Atualizada com Sucesso", Toast.LENGTH_SHORT).show();
             return true;
-        } catch (Exception ex){
+        } catch (Exception ex) {
             Log.e("Atualizar", ex.getMessage());
             Toast.makeText(c, ex.getMessage(), Toast.LENGTH_SHORT).show();
             return false;
-        }finally {
-            db.close();
         }
     }
 
