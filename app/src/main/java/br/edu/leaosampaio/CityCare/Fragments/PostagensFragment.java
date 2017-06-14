@@ -1,13 +1,16 @@
 package br.edu.leaosampaio.CityCare.Fragments;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.leaosampaio.CityCare.Adapter.PostAdapter;
@@ -21,6 +24,7 @@ import br.edu.leaosampaio.CityCare.R;
 
 public class PostagensFragment extends Fragment {
     private RecyclerView recyclerView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -28,7 +32,7 @@ public class PostagensFragment extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.post_recyclerView);
 
-        preencher();
+        preencherFeed();
 
         LinearLayoutManager layout = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
 
@@ -37,14 +41,14 @@ public class PostagensFragment extends Fragment {
         return view;
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
-        preencher();
+        preencherFeed();
     }
 
-    public void preencher(){
+    public void preencherFeed(){
+
         DenunciaDAO denunciaDAO = new DenunciaDAO(getActivity());
 
         List<Denuncia> denuncias = denunciaDAO.feedDenuncias();

@@ -36,7 +36,6 @@ public class DenunciaActivity extends AppCompatActivity {
     DenunciaDAO denunciaDAO;
     Denuncia den = new Denuncia();
     UsuarioAplication usuarioAplication = UsuarioAplication.getInstance();
-    Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,7 @@ public class DenunciaActivity extends AppCompatActivity {
         btEnviar = (ImageButton) findViewById(R.id.btEnviar);
 
         CategoriaDAO categorias = new CategoriaDAO(this);
-        ArrayAdapter<Categoria> adapter = new ArrayAdapter<Categoria>(DenunciaActivity.this, android.R.layout.simple_spinner_dropdown_item, categorias.buscar());
+        final ArrayAdapter<Categoria> adapter = new ArrayAdapter<Categoria>(DenunciaActivity.this, android.R.layout.simple_spinner_dropdown_item, categorias.buscar());
         spinCategoria.setAdapter(adapter);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

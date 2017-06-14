@@ -30,23 +30,28 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
 
     @Override
     public boolean salvar(Denuncia denuncia, Context c) {
-        try{
-            db.execSQL("INSERT INTO denuncia(denuncia_id_usuario, denuncia_id_categoria, denuncia_descricao, denuncia_localizacao, denuncia_data_hora)" +
-                    "values('" + denuncia.getUsuario().getId() + "'," +
-                    "'"+ denuncia.getCategoria().getId() + "'," +
-                    "'"+ denuncia.getDescricao() +"'," +
-                    "'"+ denuncia.getLocalizacao() +"'," +
-                    "'"+ denuncia.getDataHora() +"')");
-            Log.i("SALVAR", "Salvo com Sucesso");
-            Toast.makeText(c, "SALVO", Toast.LENGTH_SHORT).show();
-            return true;
-        } catch (Exception ex){
-            Log.e("SALVAR", ex.getMessage());
-            Toast.makeText(c, "ERRO!", Toast.LENGTH_SHORT).show();
-            return false;
-        } finally {
-            db.close();
+        if(denuncia.getId() == null) {
+            try {
+                db.execSQL("INSERT INTO denuncia(denuncia_id_usuario, denuncia_id_categoria, denuncia_descricao, denuncia_localizacao, denuncia_data_hora)" +
+                        "values('" + denuncia.getUsuario().getId() + "'," +
+                        "'" + denuncia.getCategoria().getId() + "'," +
+                        "'" + denuncia.getDescricao() + "'," +
+                        "'" + denuncia.getLocalizacao() + "'," +
+                        "'" + denuncia.getDataHora() + "')");
+                Log.i("SALVAR", "Salvo com Sucesso");
+                Toast.makeText(c, "SALVO", Toast.LENGTH_SHORT).show();
+                return true;
+            } catch (Exception ex) {
+                Log.e("SALVAR", ex.getMessage());
+                Toast.makeText(c, "ERRO!", Toast.LENGTH_SHORT).show();
+                return false;
+            } finally {
+                db.close();
+            }
+        } else {
+            atualizar(denuncia,c);
         }
+        return false;
     }
 
     public List<Denuncia> perfilPessoalDenuncias(){
@@ -118,8 +123,19 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
         }
     }
 
-    @Override
-    public boolean atualizar(Denuncia denuncia, Context c) {
-        return false;
+    private boolean atualizar(Denuncia denuncia, Context c){
+        try{
+            db.execSQL("UPDATE INTO denuncia(deuncia_id_categoria, denuncia_descricao, denuncia_localizacao)" +
+                    " values('"+ denuncia.getCategoria()+"', '" + denuncia.getDescricao()+ "', '"+ denuncia.getLocalizacao()+ " )");
+            Toast.makeText(c, "Denuncia Atualizada com Sucesso", Toast.LENGTH_SHORT).show();
+            return true;
+        } catch (Exception ex){
+            Log.e("Atualizar", ex.getMessage());
+            Toast.makeText(c, ex.getMessage(), Toast.LENGTH_SHORT).show();
+            return false;
+        }finally {
+            db.close();
+        }
     }
+
 }

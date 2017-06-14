@@ -38,7 +38,6 @@ public class FeedActivity extends AppCompatActivity {
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingMensagem);
 
         setSupportActionBar(toolbar);
-        toolbar.setLogo(R.mipmap.citycare_logo_toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_list);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -65,7 +64,7 @@ public class FeedActivity extends AppCompatActivity {
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView =
                 (SearchView) menu.findItem(R.id.search_bar).getActionView();
-        //searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         return true;
     }
