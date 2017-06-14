@@ -67,7 +67,7 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
     public List<Denuncia> feedDenuncias(){
         Cursor c = db.rawQuery("SELECT * FROM denuncia a INNER JOIN categoria b " +
                 "ON a.denuncia_id_categoria = b.id_categoria INNER JOIN usuario c ON a.denuncia_id_usuario = c.id_usuario " +
-                "ONDER BY id_denuncia DESC", null);
+                "ORDER BY id_denuncia DESC", null);
         return listar(c);
     }
 
