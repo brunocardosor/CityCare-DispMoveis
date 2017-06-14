@@ -26,6 +26,8 @@ public class PostagensFragment extends Fragment {
 
     private RecyclerView recyclerView;
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -33,7 +35,13 @@ public class PostagensFragment extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.post_recyclerView);
 
-        preenche();
+        DenunciaDAO denunciaDAO = new DenunciaDAO(getContext());
+
+        List<Denuncia> denuncias = denunciaDAO.buscar();
+
+        PostAdapter pAdapter = new PostAdapter(denuncias, getContext());
+
+        recyclerView.setAdapter(pAdapter);
 
         LinearLayoutManager layout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
@@ -42,18 +50,9 @@ public class PostagensFragment extends Fragment {
         return view;
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
-        preenche();
-    }
-
-    public void preenche(){
-
-        DenunciaDAO denunciaDAO = new DenunciaDAO(getContext());
-
-        List<Denuncia> denuncias = denunciaDAO.buscar();
-
-        recyclerView.setAdapter(new PostAdapter(denuncias, getContext()));
     }
 }

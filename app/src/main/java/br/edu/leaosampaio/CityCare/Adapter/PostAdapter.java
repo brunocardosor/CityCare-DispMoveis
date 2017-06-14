@@ -1,11 +1,7 @@
 package br.edu.leaosampaio.CityCare.Adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -17,11 +13,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import br.edu.leaosampaio.CityCare.Activity.DenunciaActivity;
-import br.edu.leaosampaio.CityCare.Activity.FeedActivity;
 import br.edu.leaosampaio.CityCare.DAO.DenunciaDAO;
 import br.edu.leaosampaio.CityCare.Modelo.Denuncia;
-import br.edu.leaosampaio.CityCare.Modelo.UsuarioAplication;
 import br.edu.leaosampaio.CityCare.R;
 
 /**
@@ -81,6 +74,7 @@ public class PostAdapter extends RecyclerView.Adapter{
                         public void onClick(DialogInterface dialog, int which) {
                             DenunciaDAO denunciaDAO = new DenunciaDAO(context);
                             denunciaDAO.delete(denuncia,context);
+                            notifyDataSetChanged();
                         }
                     });
                     bilder.show();

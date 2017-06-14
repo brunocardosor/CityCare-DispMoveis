@@ -24,7 +24,6 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
     }
 
     SQLiteDatabase db = getWritableDatabase();
-    PostagensFragment postFrag;
 
     @Override
     public boolean salvar(Denuncia denuncia, Context c) {
@@ -48,7 +47,8 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
     }
 
     public List<Denuncia> buscar(){
-        Cursor c = db.rawQuery("SELECT * FROM denuncia a INNER JOIN categoria b ON a.denuncia_id_categoria = b.id_categoria INNER JOIN usuario c ON a.denuncia_id_usuario = c.id_usuario", null);
+        Cursor c = db.rawQuery("SELECT * FROM denuncia a INNER JOIN categoria b " +
+                "ON a.denuncia_id_categoria = b.id_categoria INNER JOIN usuario c ON a.denuncia_id_usuario = c.id_usuario ORDER BY id_denuncia DESC", null);
 
         return listar(c);
     }
