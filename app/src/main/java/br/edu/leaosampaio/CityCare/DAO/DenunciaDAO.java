@@ -2,6 +2,7 @@ package br.edu.leaosampaio.CityCare.DAO;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DataSetObserver;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.widget.Toast;
@@ -9,10 +10,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.leaosampaio.CityCare.Adapter.PostAdapter;
 import br.edu.leaosampaio.CityCare.Fragments.PostagensFragment;
 import br.edu.leaosampaio.CityCare.Modelo.Categoria;
 import br.edu.leaosampaio.CityCare.Modelo.Denuncia;
 import br.edu.leaosampaio.CityCare.Modelo.Usuario;
+import br.edu.leaosampaio.CityCare.Modelo.UsuarioAplication;
 
 /**
  * Created by lab1-20 on 05/06/17.
@@ -24,7 +27,6 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
     }
 
     SQLiteDatabase db = getWritableDatabase();
-    PostagensFragment postFrag;
 
     @Override
     public boolean salvar(Denuncia denuncia, Context c) {
@@ -47,9 +49,25 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
         }
     }
 
-    public List<Denuncia> buscar(){
-        Cursor c = db.rawQuery("SELECT * FROM denuncia a INNER JOIN categoria b ON a.denuncia_id_categoria = b.id_categoria INNER JOIN usuario c ON a.denuncia_id_usuario = c.id_usuario", null);
+    public List<Denuncia> perfilPessoalDenuncias(){
+        Usuario usuario = UsuarioAplication.getInstance().getUsuario();
+        Cursor c = db.rawQuery("SELECT * FROM denuncia a INNER JOIN categoria b" +
+                " ON a.denuncia_id_categoria = b.id_categoria INNER JOIN usuario c ON a.denuncia_id_usuario = c.id_usuario " +
+                "ORDER BY id_denuncia DESC WHERE denuncia_id_usuario='" + usuario.getId() +"'",null);
+        return listar(c);
+    }
 
+    public List<Denuncia> perfilDenuncias(Usuario usuario){
+        Cursor c = db.rawQuery("SELECT * FROM denuncia a INNER JOIN categoria b" +
+                " ON a.denuncia_id_categoria = b.id_categoria INNER JOIN usuario c ON a.denuncia_id_usuario = c.id_usuario " +
+                "ORDER BY id_denuncia DESC WHERE denuncia_id_usuario='"+ usuario.getId() +"'", null);
+        return listar(c);
+    }
+
+    public List<Denuncia> feedDenuncias(){
+        Cursor c = db.rawQuery("SELECT * FROM denuncia a INNER JOIN categoria b " +
+                "ON a.denuncia_id_categoria = b.id_categoria INNER JOIN usuario c ON a.denuncia_id_usuario = c.id_usuario " +
+                "ONDER BY id_denuncia DESC", null);
         return listar(c);
     }
 

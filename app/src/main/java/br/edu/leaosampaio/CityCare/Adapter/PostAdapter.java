@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AlertDialog;
@@ -28,19 +29,41 @@ import br.edu.leaosampaio.CityCare.R;
  * Created by lab1-18 on 12/06/17.
  */
 
-public class PostAdapter extends RecyclerView.Adapter{
+public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostAdapterViewHolder> {
 
-    private List<Denuncia> denuncias;
     private Context context;
+    private List<Denuncia> denuncias;
 
+    public PostAdapter(final List<Denuncia> denuncias, Context context) {
+        this.denuncias = denuncias;
+        this.context = context;
+        RecyclerView.Adapter mAdapter = this;
+        mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                notifyDataSetChanged();
+            }
 
-    public PostAdapter(List<Denuncia> denuncias, Context context){
-            this.denuncias = denuncias;
-            this.context = context;
+            @Override
+            public void onItemRangeChanged(int positionStart, int itemCount) {
+                notifyItemRangeChanged(positionStart, itemCount);
+            }
+
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                notifyItemRangeInserted(positionStart, itemCount);
+            }
+
+            @Override
+            public void onItemRangeRemoved(int positionStart, int itemCount) {
+                notifyItemRangeRemoved(positionStart, itemCount);
+            }
+        });
     }
 
+
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PostAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(context).inflate(R.layout.card_post_adapter, parent, false);
         PostAdapterViewHolder holder = new PostAdapterViewHolder(view);
@@ -48,8 +71,8 @@ public class PostAdapter extends RecyclerView.Adapter{
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        PostAdapterViewHolder holder1 = (PostAdapterViewHolder) holder;
+    public void onBindViewHolder(final PostAdapterViewHolder holder, final int position) {
+        PostAdapterViewHolder holder1 = holder;
         final Denuncia denuncia = denuncias.get(position);
 
         holder1.tvUsuario.setText(denuncia.getUsuario().toString());
@@ -61,10 +84,11 @@ public class PostAdapter extends RecyclerView.Adapter{
         holder1.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.editPost){
+                if (item.getItemId() == R.id.editPost) {
 
 
-                } if(item.getItemId() == R.id.deletePost){
+                }
+                if (item.getItemId() == R.id.deletePost) {
 
                     AlertDialog.Builder bilder = new AlertDialog.Builder(context);
                     bilder.setMessage("Deseja apagar esta denúncia?");
@@ -72,7 +96,7 @@ public class PostAdapter extends RecyclerView.Adapter{
                     bilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
+                            dialog.dismiss();
                         }
                     });
 
@@ -80,7 +104,9 @@ public class PostAdapter extends RecyclerView.Adapter{
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             DenunciaDAO denunciaDAO = new DenunciaDAO(context);
-                            denunciaDAO.delete(denuncia,context);
+                            denunciaDAO.delete(denuncia, context);
+                            notifyItemRangeRemoved(denuncias.size()-1, getItemCount());
+                            dialog.dismiss();
                         }
                     });
                     bilder.show();
@@ -92,12 +118,13 @@ public class PostAdapter extends RecyclerView.Adapter{
 
     }
 
+
     @Override
     public int getItemCount() {
         return denuncias.size();
     }
 
-    public class PostAdapterViewHolder extends RecyclerView.ViewHolder{
+    public class PostAdapterViewHolder extends RecyclerView.ViewHolder {
 
         final TextView tvUsuario;
         final TextView tvData;
@@ -116,12 +143,5 @@ public class PostAdapter extends RecyclerView.Adapter{
             tvLocalizacao = (TextView) view.findViewById(R.id.tvLocalizacao);
             toolbar = (Toolbar) view.findViewById(R.id.toolbarCard);
         }
-    }
-
-    public void deletePost(MenuItem item) {
-
-    }
-
-    public void editPost(MenuItem item) {
     }
 }

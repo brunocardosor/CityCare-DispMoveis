@@ -2,9 +2,6 @@ package br.edu.leaosampaio.CityCare.Fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,9 +20,7 @@ import br.edu.leaosampaio.CityCare.R;
  */
 
 public class PostagensFragment extends Fragment {
-
     private RecyclerView recyclerView;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -33,27 +28,29 @@ public class PostagensFragment extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.post_recyclerView);
 
-        preenche();
+        preencher();
 
-        LinearLayoutManager layout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager layout = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
 
         recyclerView.setLayoutManager(layout);
 
         return view;
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
-        preenche();
+        preencher();
     }
 
-    public void preenche(){
+    public void preencher(){
+        DenunciaDAO denunciaDAO = new DenunciaDAO(getActivity());
 
-        DenunciaDAO denunciaDAO = new DenunciaDAO(getContext());
+        List<Denuncia> denuncias = denunciaDAO.feedDenuncias();
 
-        List<Denuncia> denuncias = denunciaDAO.buscar();
+        PostAdapter postAdapter = new PostAdapter(denuncias, getActivity());
 
-        recyclerView.setAdapter(new PostAdapter(denuncias, getContext()));
+        recyclerView.setAdapter(postAdapter);
     }
 }

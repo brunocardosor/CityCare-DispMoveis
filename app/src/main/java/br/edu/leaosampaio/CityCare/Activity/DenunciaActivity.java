@@ -14,11 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import br.edu.leaosampaio.CityCare.Adapter.PostAdapter;
 import br.edu.leaosampaio.CityCare.DAO.CategoriaDAO;
 import br.edu.leaosampaio.CityCare.DAO.DenunciaDAO;
 import br.edu.leaosampaio.CityCare.Modelo.Categoria;
 import br.edu.leaosampaio.CityCare.Modelo.Denuncia;
-import br.edu.leaosampaio.CityCare.Modelo.Usuario;
 import br.edu.leaosampaio.CityCare.Modelo.UsuarioAplication;
 import br.edu.leaosampaio.CityCare.R;
 
@@ -97,16 +100,22 @@ public class DenunciaActivity extends AppCompatActivity {
 
 
     private void cadastrarDenuncia(Denuncia denuncia) {
-        if (spinCategoria.getSelectedItemId() == 0) {
+        if(TextUtils.isEmpty(descricao.getText().toString())){
+            descricao.setError("Campo Obrigatório");
+        }
+
+        if(TextUtils.isEmpty(localizacao.getText().toString())){
+            localizacao.setError("Campo Obrigatório");
+        }
+
+        if(spinCategoria.getSelectedItemPosition() == 0) {
             TextView errorTextView = (TextView) spinCategoria.getSelectedView();
             errorTextView.setError("Campo Obrigatório");
             errorTextView.setTextColor(Color.RED);
             errorTextView.setText("Campo Obrigatório");
-        } if(TextUtils.isEmpty(descricao.getText().toString())){
-            descricao.setError("Campo Obrigatório");
-        } if(TextUtils.isEmpty(localizacao.getText().toString())){
-            localizacao.setError("Campo Obrigatório");
-        } else {
+        }
+
+        else {
             denunciaDAO = new DenunciaDAO(DenunciaActivity.this);
             denuncia.setDescricao(descricao.getText().toString());
             denuncia.setCategoria((Categoria) spinCategoria.getSelectedItem());
