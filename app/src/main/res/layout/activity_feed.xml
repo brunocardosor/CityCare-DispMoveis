@@ -8,6 +8,16 @@
     android:orientation="vertical"
     android:visibility="visible">
 
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/nav_drawer_menu"
+        app:headerLayout="@layout/nav_header"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,10 +30,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorAccent"
-            android:minHeight="?attr/actionBarSize">
+            android:elevation="3dp">
 
-
-
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@mipmap/citycare_logo_toolbar"/>
         </android.support.v7.widget.Toolbar>
 
         <android.support.design.widget.TabLayout
@@ -34,23 +47,11 @@
             app:tabBackground="@color/colorAccent"
             app:tabIndicatorColor="@color/colorPrimary"
             app:tabSelectedTextColor="@color/colorPrimary"
-            app:tabTextColor="@color/colorDetails">
-
-            <android.support.design.widget.TabItem android:icon="@drawable/ic_web" />
-
-            <android.support.design.widget.TabItem android:icon="@drawable/ic_map" />
-
-            <android.support.design.widget.TabItem android:icon="@drawable/ic_person" />
-        </android.support.design.widget.TabLayout>
-
-        <fragment
+            app:tabTextColor="@color/colorDetails"/>
+        <android.support.v4.view.ViewPager
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/postFragment"
-            class="br.edu.leaosampaio.CityCare.Fragments.PostagensFragment"
-            tools:layout="@layout/postagem_fragment"/>
-
-
+            android:id="@+id/view_pager"/>
     </LinearLayout>
 
     <FrameLayout

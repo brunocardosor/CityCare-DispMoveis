@@ -62,7 +62,4 @@ public abstract class GenericDAO<T> extends SQLiteOpenHelper{
     public abstract boolean salvar(T t, Context c);
 
     public abstract boolean delete(T t, Context c);
-
-    public abstract boolean atualizar(T t, Context c);
-
 }

@@ -115,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
         else if(userD.login(email,password)){
             Intent i = new Intent(LoginActivity.this, FeedActivity.class);
             startActivity(i);
+            finish();
         }
 
         else {

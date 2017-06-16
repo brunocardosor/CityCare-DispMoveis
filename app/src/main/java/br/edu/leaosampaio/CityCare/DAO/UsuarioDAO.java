@@ -22,10 +22,11 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
     }
 
     UsuarioAplication usuarioAplication = UsuarioAplication.getInstance();
+    SQLiteDatabase db = getWritableDatabase();
 
     @Override
     public boolean salvar(Usuario usuario, Context context) {
-        SQLiteDatabase db = getWritableDatabase();
+
         try {
             db.execSQL("INSERT INTO usuario(nome_usuario,estado_usuario,cidade_usuario," +
                     "email_usuario,senha_usuario,status_usuario) VALUES('" + usuario.getNome() +
@@ -45,25 +46,38 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 
     @Override
     public boolean delete(Usuario usuario, Context context) {
+        if(usuario.getId() == null) {
+            try {
+                db.delete("usuario", "id_usuario", new String[]{String.valueOf(usuario.getId())});
+                Log.i("DELETE", "Usuário deletado");
+                Toast.makeText(context, "Usuario Deletado", Toast.LENGTH_SHORT).show();
+                return true;
+            } catch (Exception ex) {
+                Toast.makeText(context, "ERRO!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        } else {
+            atualizar(usuario, context);
+        } return false;
+    }
+
+    public boolean atualizar(Usuario usuario, Context c) {
         try{
-            SQLiteDatabase db = getWritableDatabase();
-            db.delete("usuario","id_usuario", new String[]{String.valueOf(usuario.getId())});
-            Log.i("DELETE", "Usuário deletado");
-            Toast.makeText(context,"Usuario Deletado", Toast.LENGTH_SHORT).show();
+            db.execSQL("UPDATE usuario SET nome_usuario='"+ usuario.getNome() +"'" +
+                    " email_usuario='" + usuario.getEmail() +"'" +
+                    "senha_usuario='"+usuario.getSenha() + "'" +
+                    "estado_usuario='" + usuario.getEstado() + "'" +
+                    "cidade_usaurio='" + usuario.getCidade() +"' WHERE id_usuario='"+usuario.getId()+"'" );
+            Toast.makeText(c,"Usuario Atualizado", Toast.LENGTH_LONG).show();
             return true;
-        } catch (Exception ex) {
-            Toast.makeText(context, "ERRO!", Toast.LENGTH_SHORT).show();
+        }catch (Exception ex){
+            Log.e("ATUALIZAR", ex.getMessage());
+            Toast.makeText(c, ex.getMessage(), Toast.LENGTH_SHORT).show();
             return false;
         }
     }
 
-    @Override
-    public boolean atualizar(Usuario usuario, Context context) {
-            return false;
-    }
-
     public boolean login(String email, String senha) {
-            SQLiteDatabase db = getWritableDatabase();
             Cursor c = db.query("usuario", null, "email_usuario='" + email + "'", null, null, null, null);
             List<Usuario> usuarios = listar(c);
             if (usuarios.size() == 1 && usuarios.get(0).getEmail().equals(email) && usuarios.get(0).getSenha().equals(senha)) {

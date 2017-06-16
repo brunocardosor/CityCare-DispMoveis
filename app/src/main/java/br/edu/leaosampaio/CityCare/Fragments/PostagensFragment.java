@@ -1,16 +1,16 @@
 package br.edu.leaosampaio.CityCare.Fragments;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.leaosampaio.CityCare.Adapter.PostAdapter;
@@ -22,11 +22,8 @@ import br.edu.leaosampaio.CityCare.R;
  * Created by lab1-18 on 12/06/17.
  */
 
-public class PostagensFragment extends Fragment {
-
+public class PostagensFragment extends android.support.v4.app.Fragment {
     private RecyclerView recyclerView;
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,24 +32,28 @@ public class PostagensFragment extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.post_recyclerView);
 
-        DenunciaDAO denunciaDAO = new DenunciaDAO(getContext());
+        preencher();
 
-        List<Denuncia> denuncias = denunciaDAO.buscar();
-
-        PostAdapter pAdapter = new PostAdapter(denuncias, getContext());
-
-        recyclerView.setAdapter(pAdapter);
-
-        LinearLayoutManager layout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager layout = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
 
         recyclerView.setLayoutManager(layout);
 
         return view;
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
+        preencher();
+    }
+
+    public void preencher(){
+        DenunciaDAO denunciaDAO = new DenunciaDAO(getActivity());
+
+        List<Denuncia> denuncias = denunciaDAO.feedDenuncias();
+
+        PostAdapter postAdapter = new PostAdapter(denuncias, getActivity());
+
+        recyclerView.setAdapter(postAdapter);
     }
 }
