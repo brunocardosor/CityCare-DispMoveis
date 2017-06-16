@@ -100,9 +100,13 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
                     } else {
                         usuario.setStatus(false);
                     }
-
                     denuncia.setCategoria(categoria);
-                    denuncia.setUsuario(usuario);
+                    if(usuario.getId() == UsuarioAplication.getInstance().getUsuario().getId()){
+                        denuncia.setUsuario(UsuarioAplication.getInstance().getUsuario());
+                    } else {
+                        denuncia.setUsuario(usuario);
+
+                    }
 
                 } while (c.moveToNext());
             }   return denuncias;

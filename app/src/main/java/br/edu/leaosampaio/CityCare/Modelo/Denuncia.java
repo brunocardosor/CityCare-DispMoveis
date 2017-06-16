@@ -26,8 +26,7 @@ public class Denuncia implements Parcelable {
     protected Denuncia(Parcel in) {
         descricao = in.readString();
         localizacao = in.readString();
-        categoria = (Categoria) in.readParcelable(Categoria.class.getClassLoader());
-        usuario = (Usuario) in.readParcelable(Usuario.class.getClassLoader());
+        categoria =  in.readParcelable(Categoria.class.getClassLoader());
         dataHora = in.readString();
     }
 
@@ -111,7 +110,6 @@ public class Denuncia implements Parcelable {
         dest.writeString(descricao);
         dest.writeString(localizacao);
         dest.writeParcelable(categoria, flags);
-        dest.writeParcelable(usuario, flags);
         dest.writeString(dataHora);
     }
 

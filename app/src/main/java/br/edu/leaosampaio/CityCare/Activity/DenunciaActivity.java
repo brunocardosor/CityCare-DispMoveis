@@ -1,10 +1,8 @@
 package br.edu.leaosampaio.CityCare.Activity;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,15 +13,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import java.util.ArrayList;
-import java.util.List;
-
-import br.edu.leaosampaio.CityCare.Adapter.PostAdapter;
 import br.edu.leaosampaio.CityCare.DAO.CategoriaDAO;
 import br.edu.leaosampaio.CityCare.DAO.DenunciaDAO;
 import br.edu.leaosampaio.CityCare.Modelo.Categoria;
 import br.edu.leaosampaio.CityCare.Modelo.Denuncia;
+import br.edu.leaosampaio.CityCare.Modelo.Usuario;
 import br.edu.leaosampaio.CityCare.Modelo.UsuarioAplication;
 import br.edu.leaosampaio.CityCare.R;
 
@@ -37,7 +31,7 @@ public class DenunciaActivity extends AppCompatActivity {
     Toolbar toolbar;
     DenunciaDAO denunciaDAO;
     Denuncia den = new Denuncia();
-    UsuarioAplication usuarioAplication = UsuarioAplication.getInstance();
+    Usuario usuario = UsuarioAplication.getInstance().getUsuario();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +119,7 @@ public class DenunciaActivity extends AppCompatActivity {
                 denuncia.setDataHora();
             }
             if(denuncia.getUsuario() == null){
-                denuncia.setUsuario(usuarioAplication.getUsuario());
+                denuncia.setUsuario(usuario);
             }
             denuncia.setLocalizacao(localizacao.getText().toString());
             if(denunciaDAO.salvar(denuncia, DenunciaActivity.this)){
