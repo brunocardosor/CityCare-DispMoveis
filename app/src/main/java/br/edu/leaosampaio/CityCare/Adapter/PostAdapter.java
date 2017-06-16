@@ -52,7 +52,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostAdapterVie
     @Override
     public void onBindViewHolder(final PostAdapterViewHolder holder, final int position) {
         PostAdapterViewHolder holder1 = holder;
-        Denuncia denuncia = denuncias.get(position);
+        final Denuncia denuncia = denuncias.get(position);
 
         holder1.tvUsuario.setText(denuncia.getUsuario().toString());
         holder1.tvData.setText(denuncia.getDataHora());
@@ -63,23 +63,23 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostAdapterVie
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.editPost) {
-
-
-
+                    Intent i = new Intent(context, DenunciaActivity.class);
+                    i.putExtra("denuncia", denuncia);
+                    context.startActivity(i);
                 }
                 if (item.getItemId() == R.id.deletePost) {
 
-                    AlertDialog.Builder bilder = new AlertDialog.Builder(context);
-                    bilder.setMessage("Deseja apagar esta denúncia?");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage("Deseja apagar esta denúncia?");
 
-                    bilder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                         }
                     });
 
-                    bilder.setPositiveButton("Apagar", new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton("Apagar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             DenunciaDAO denunciaDAO = new DenunciaDAO(context);
@@ -90,7 +90,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostAdapterVie
                             notifyDataSetChanged();
                         }
                     });
-                    bilder.show();
+                    builder.show();
                 }
                 return true;
             }

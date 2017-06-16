@@ -56,14 +56,14 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
         Usuario usuario = UsuarioAplication.getInstance().getUsuario();
         Cursor c = db.rawQuery("SELECT * FROM denuncia a INNER JOIN categoria b" +
                 " ON a.denuncia_id_categoria = b.id_categoria INNER JOIN usuario c ON a.denuncia_id_usuario = c.id_usuario " +
-                "ORDER BY id_denuncia DESC WHERE denuncia_id_usuario='" + usuario.getId() +"'",null);
+                "WHERE denuncia_id_usuario='" + usuario.getId() +"' ORDER BY id_denuncia DESC ",null);
         return listar(c);
     }
 
     public List<Denuncia> perfilDenuncias(Usuario usuario){
         Cursor c = db.rawQuery("SELECT * FROM denuncia a INNER JOIN categoria b" +
                 " ON a.denuncia_id_categoria = b.id_categoria INNER JOIN usuario c ON a.denuncia_id_usuario = c.id_usuario " +
-                "ORDER BY id_denuncia DESC WHERE denuncia_id_usuario='"+ usuario.getId() +"'", null);
+                "WHERE denuncia_id_usuario='"+ usuario.getId() +"' ORDER BY id_denuncia DESC ", null);
         return listar(c);
     }
 
@@ -121,8 +121,8 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
 
     private boolean atualizar(Denuncia denuncia, Context c){
         try{
-            db.execSQL("UPDATE denuncia SET deuncia_id_categoria = '"+ denuncia.getCategoria()+"'," +
-                    "denuncia_descricao = '" + denuncia.getDescricao()+"'," +
+            db.execSQL("UPDATE denuncia SET deuncia_id_categoria = '"+ denuncia.getCategoria().getId() +"'," +
+                    "denuncia_descricao = '" + denuncia.getDescricao() +"'," +
                     "denuncia_localizacao ='"+ denuncia.getLocalizacao()+"' WHERE id_denuncia='"+ denuncia.getId() +"')");
             Toast.makeText(c, "Denuncia Atualizada com Sucesso", Toast.LENGTH_SHORT).show();
             return true;

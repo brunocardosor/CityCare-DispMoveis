@@ -22,7 +22,7 @@ import br.edu.leaosampaio.CityCare.R;
  * Created by lab1-18 on 12/06/17.
  */
 
-public class PostagensFragment extends Fragment {
+public class PostagensFragment extends android.support.v4.app.Fragment {
     private RecyclerView recyclerView;
 
     @Override

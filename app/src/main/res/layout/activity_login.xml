@@ -84,17 +84,41 @@
                 android:textColor="@android:color/background_light"
                 android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btCadastro"
-                style="?android:textAppearanceSmall"
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="16dp"
-                android:background="@android:color/holo_orange_dark"
-                android:text="     Cadastre-se     "
-                android:textColor="@android:color/background_light"
-                android:textStyle="bold" />
+                android:layout_gravity="center">
+                <Button
+                    android:id="@+id/btCadastro"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:background="@android:color/holo_orange_dark"
+                    android:text="     Cadastre-se     "
+                    android:textColor="@android:color/background_light"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/btFacebook"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/btCadastro"
+                    android:layout_below="@+id/btCadastro"
+                    android:layout_marginTop="16dp"
+                    android:background="#3e4495"
+                    android:src="@mipmap/ic_facebook_button" />
+                <ImageButton
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btCadastro"
+                    android:layout_alignRight="@+id/btCadastro"
+                    android:id="@+id/btGMail"
+                    android:src="@mipmap/ic_google_button"
+                    android:background="@android:color/holo_red_dark"/>
+            </RelativeLayout>
    </LinearLayout>
 </ScrollView>
 

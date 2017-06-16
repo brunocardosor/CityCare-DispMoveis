@@ -1,5 +1,6 @@
 package br.edu.leaosampaio.CityCare.Activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,7 +34,7 @@ public class DenunciaActivity extends AppCompatActivity {
     private EditText descricao;
     private ImageButton btEnviar;
     private EditText localizacao;
-
+    Toolbar toolbar;
     DenunciaDAO denunciaDAO;
     Denuncia den = new Denuncia();
     UsuarioAplication usuarioAplication = UsuarioAplication.getInstance();
@@ -52,10 +53,10 @@ public class DenunciaActivity extends AppCompatActivity {
         final ArrayAdapter<Categoria> adapter = new ArrayAdapter<Categoria>(DenunciaActivity.this, android.R.layout.simple_spinner_dropdown_item, categorias.buscar());
         spinCategoria.setAdapter(adapter);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("Denunciar");
-        toolbar.setNavigationIcon(R.drawable.ic_action_arrow_back);
+        toolbar.setNavigationIcon(R.mipmap.ic_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,10 +64,30 @@ public class DenunciaActivity extends AppCompatActivity {
             }
         });
 
+        if(getIntent().hasExtra("denuncia")){
+            boolean posicao = false;
+
+            den = getIntent().getParcelableExtra("denuncia");
+            descricao.setText(den.getDescricao());
+            localizacao.setText(den.getLocalizacao());
+            while(posicao == false){
+                for(int i = 0; i <= spinCategoria.getCount(); i++){
+                    if(den.getCategoria().getDescricao() == spinCategoria.getItemAtPosition(i).toString()){
+                        spinCategoria.setSelection(i,false);
+                        posicao = true;
+                    }
+                }
+            }
+
+        }
+
         btEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 cadastrarDenuncia(den);
+                if(getIntent().hasExtra("denuncia")) {
+                    getIntent().removeExtra("denuncia");
+                }
             }
         });
 
@@ -76,25 +97,6 @@ public class DenunciaActivity extends AppCompatActivity {
                 Toast.makeText(DenunciaActivity.this, "ABRIRÁ O MAPA", Toast.LENGTH_SHORT).show();
             }
         });
-
-        /*if(bundle.getSerializable("denuncia") != null){
-            boolean posicao = false;
-
-            den = (Denuncia) bundle.getSerializable("denuncia");
-            descricao.setText(den.getDescricao());
-            localizacao.setText(den.getLocalizacao());
-
-            while(posicao){
-                for(int i = 0; i <= spinCategoria.getScrollBarSize(); i++){
-                    if(den.getCategoria().getDescricao() == spinCategoria.getItemAtPosition(i).toString()){
-                        spinCategoria.setSelection(i);
-                        posicao = true;
-                    }
-                }
-            }
-
-        }*/
-
     }
 
 
@@ -119,8 +121,12 @@ public class DenunciaActivity extends AppCompatActivity {
             denunciaDAO = new DenunciaDAO(DenunciaActivity.this);
             denuncia.setDescricao(descricao.getText().toString());
             denuncia.setCategoria((Categoria) spinCategoria.getSelectedItem());
-            denuncia.setDataHora();
-            denuncia.setUsuario(usuarioAplication.getUsuario());
+            if(denuncia.getDataHora() == null){
+                denuncia.setDataHora();
+            }
+            if(denuncia.getUsuario() == null){
+                denuncia.setUsuario(usuarioAplication.getUsuario());
+            }
             denuncia.setLocalizacao(localizacao.getText().toString());
             if(denunciaDAO.salvar(denuncia, DenunciaActivity.this)){
                 finish();

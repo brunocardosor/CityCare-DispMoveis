@@ -1,10 +1,12 @@
 package br.edu.leaosampaio.CityCare.Activity;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +24,7 @@ import java.util.regex.Pattern;
 
 import br.edu.leaosampaio.CityCare.DAO.UsuarioDAO;
 import br.edu.leaosampaio.CityCare.Modelo.Usuario;
+import br.edu.leaosampaio.CityCare.Modelo.UsuarioAplication;
 import br.edu.leaosampaio.CityCare.R;
 
 public class CadastroActivity extends AppCompatActivity{
@@ -35,6 +38,7 @@ public class CadastroActivity extends AppCompatActivity{
     private EditText txtEmail;
     private EditText txtSenha;
     private Button cadastrar;
+    private Toolbar toolbar;
 
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"; //String com sintaxe do Regex
@@ -47,6 +51,7 @@ public class CadastroActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
 
+        Button delete = (Button) findViewById(R.id.btDeletar);
         txtNome = (EditText) findViewById(R.id.txtNome);
         txtSobrenome = (EditText) findViewById(R.id.txtSobrenome);
         spinEstado = (Spinner) findViewById(R.id.spinEstado);
@@ -67,16 +72,75 @@ public class CadastroActivity extends AppCompatActivity{
         ArrayAdapter<String> cidades = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,cidade);
         spinCidade.setAdapter(cidades);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("Cadastro");
-        toolbar.setNavigationIcon(R.drawable.ic_action_arrow_back);
+        toolbar.setNavigationIcon(R.mipmap.ic_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+
+        if(getIntent().hasExtra("usuario")){
+            final Usuario usuario = getIntent().getParcelableExtra("usuario");
+            toolbar.setTitle("Atualizar Perfil");
+            boolean encontrado = false;
+            String[] nome = usuario.getNome().split(" ");
+            txtNome.setText(nome[0]);
+            String sobrenome = nome[1];
+            if(2 < nome.length){
+                for(int i = 2; i < nome.length;i++){
+                    sobrenome += " " + nome[i];
+                }
+            }
+
+            txtSobrenome.setText(sobrenome);
+
+            while(encontrado == false){
+                for(int i = 0; i < spinEstado.getCount(); i++)
+                if(usuario.getEstado() == spinEstado.getItemAtPosition(i)){
+                    spinEstado.setSelection(i);
+                    encontrado = true;
+                }
+            }
+            encontrado = false;
+            while(encontrado == false){
+                for(int i = 0; i < spinCidade.getCount(); i++){
+                    if(usuario.getCidade() == spinCidade.getItemAtPosition(i)){
+                        spinCidade.setSelection(i);
+                        encontrado = true;
+                    }
+                }
+            }
+            txtEmail.setText(usuario.getEmail());
+            txtSenha.setText(usuario.getSenha());
+            delete.setVisibility(View.VISIBLE);
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CadastroActivity.this);
+                    builder.setMessage("Deseja mesmo excluir sua conta?");
+                    builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            UsuarioDAO usrDAO = new UsuarioDAO(CadastroActivity.this);
+                            usrDAO.delete(usuario,CadastroActivity.this);
+                            UsuarioAplication.getInstance().setUsuario(null);
+                            finish();
+                        }
+                    });
+
+                    builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                }
+            });
+        }
     }
 
     public void UsuarioCadastrar() {

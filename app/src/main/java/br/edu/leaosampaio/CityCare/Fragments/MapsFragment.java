@@ -1,10 +1,16 @@
 package br.edu.leaosampaio.CityCare.Fragments;
 
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -12,19 +18,32 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import br.edu.leaosampaio.CityCare.R;
 
-public class MapsFragment extends FragmentActivity implements OnMapReadyCallback {
+public class MapsFragment extends Fragment{
 
-    private GoogleMap mMap;
+    MapView mapFragment;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_maps, container, false);
+        mapFragment = (MapView) view.findViewById(R.id.map);
+
+        mapFragment.onCreate(getArguments());
+
+        mapFragment.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                GoogleMap mMap = googleMap;
+
+                LatLng jua = new LatLng(-7.1849977, -39.3156996);
+                mMap.addMarker(new MarkerOptions().position(jua).title("Juazeiro do Norte"));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(jua));
+                mMap.moveCamera(CameraUpdateFactory.zoomTo(15));
+            }
+        });
+
+        return view;
     }
+
 
 
     /**
@@ -36,13 +55,4 @@ public class MapsFragment extends FragmentActivity implements OnMapReadyCallback
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-    }
 }
