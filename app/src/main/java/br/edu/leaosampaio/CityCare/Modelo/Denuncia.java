@@ -26,6 +26,8 @@ public class Denuncia implements Parcelable {
     protected Denuncia(Parcel in) {
         descricao = in.readString();
         localizacao = in.readString();
+        categoria = (Categoria) in.readParcelable(Categoria.class.getClassLoader());
+        usuario = (Usuario) in.readParcelable(Usuario.class.getClassLoader());
         dataHora = in.readString();
     }
 
@@ -104,23 +106,13 @@ public class Denuncia implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeLong(id);
-        parcel.writeString(descricao);
-        parcel.writeString(localizacao);
-        parcel.writeString(dataHora);
-        parcel.writeValue(usuario);
-        parcel.writeValue(categoria);
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(descricao);
+        dest.writeString(localizacao);
+        dest.writeParcelable(categoria, flags);
+        dest.writeParcelable(usuario, flags);
+        dest.writeString(dataHora);
     }
 
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (descricao != null ? descricao.hashCode() : 0);
-        result = 31 * result + (localizacao != null ? localizacao.hashCode() : 0);
-        result = 31 * result + (categoria != null ? categoria.hashCode() : 0);
-        result = 31 * result + (usuario != null ? usuario.hashCode() : 0);
-        result = 31 * result + (dataHora != null ? dataHora.hashCode() : 0);
-        return result;
-    }
 }

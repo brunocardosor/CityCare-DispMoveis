@@ -17,6 +17,7 @@ public class Categoria implements Parcelable {
     }
 
     protected Categoria(Parcel in) {
+        id = in.readLong();
         descricao = in.readString();
     }
 
@@ -60,6 +61,7 @@ public class Categoria implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(id);
         parcel.writeString(descricao);
     }
 }

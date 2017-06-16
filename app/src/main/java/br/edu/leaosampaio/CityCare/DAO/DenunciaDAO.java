@@ -2,7 +2,7 @@ package br.edu.leaosampaio.CityCare.DAO;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DataSetObserver;
+
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.widget.Toast;
@@ -10,8 +10,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.edu.leaosampaio.CityCare.Adapter.PostAdapter;
-import br.edu.leaosampaio.CityCare.Fragments.PostagensFragment;
 import br.edu.leaosampaio.CityCare.Modelo.Categoria;
 import br.edu.leaosampaio.CityCare.Modelo.Denuncia;
 import br.edu.leaosampaio.CityCare.Modelo.Usuario;
@@ -97,6 +95,11 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
                     usuario.setNome(c.getString(c.getColumnIndex("nome_usuario")));
                     usuario.setCidade(c.getString(c.getColumnIndex("cidade_usuario")));
                     usuario.setEstado(c.getString(c.getColumnIndex("estado_usuario")));
+                    if(c.getInt(c.getColumnIndex("status_usuario")) == 1){
+                        usuario.setStatus(true);
+                    } else {
+                        usuario.setStatus(false);
+                    }
 
                     denuncia.setCategoria(categoria);
                     denuncia.setUsuario(usuario);

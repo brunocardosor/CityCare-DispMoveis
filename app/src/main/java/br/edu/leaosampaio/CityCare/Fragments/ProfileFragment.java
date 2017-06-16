@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.edu.leaosampaio.CityCare.Adapter.PostAdapter;
+import br.edu.leaosampaio.CityCare.Adapter.ProfileAdapter;
 import br.edu.leaosampaio.CityCare.DAO.DenunciaDAO;
 import br.edu.leaosampaio.CityCare.Modelo.Denuncia;
 import br.edu.leaosampaio.CityCare.Modelo.Usuario;
@@ -67,6 +68,6 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
 
         List<Denuncia> denuncias = denunciaDAO.perfilPessoalDenuncias();
 
-        recyclerView.setAdapter(new PostAdapter(denuncias, getActivity()));
+        recyclerView.setAdapter(new ProfileAdapter(denuncias, getActivity()));
     }
 }

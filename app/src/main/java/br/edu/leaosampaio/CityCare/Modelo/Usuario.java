@@ -22,6 +22,7 @@ public class Usuario implements Parcelable{
     }
 
     protected Usuario(Parcel in) {
+        id = in.readLong();
         nome = in.readString();
         email = in.readString();
         senha = in.readString();
@@ -109,23 +110,12 @@ public class Usuario implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(id);
         parcel.writeString(nome);
         parcel.writeString(email);
         parcel.writeString(senha);
         parcel.writeString(estado);
         parcel.writeString(cidade);
         parcel.writeByte((byte) (status ? 1 : 0));
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (nome != null ? nome.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (senha != null ? senha.hashCode() : 0);
-        result = 31 * result + (estado != null ? estado.hashCode() : 0);
-        result = 31 * result + (cidade != null ? cidade.hashCode() : 0);
-        result = 31 * result + (status ? 1 : 0);
-        return result;
     }
 }
