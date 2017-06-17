@@ -62,6 +62,7 @@ public class DenunciaActivity extends AppCompatActivity {
             boolean posicao = false;
 
             den = getIntent().getParcelableExtra("denuncia");
+            den.setCategoria((Categoria) getIntent().getParcelableExtra("categoria"));
             descricao.setText(den.getDescricao());
             localizacao.setText(den.getLocalizacao());
             while(posicao == false){

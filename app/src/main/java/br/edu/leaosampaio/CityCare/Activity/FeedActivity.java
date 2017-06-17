@@ -49,100 +49,80 @@ public class FeedActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_feed);
+        if (UsuarioAplication.getInstance().getUsuario() != null) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_feed);
 
-        tabLayout = (TabLayout) findViewById(R.id.mTabLayout);
-        toolbar = (Toolbar) findViewById(R.id.toolbarFeed);
-        floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingMensagem);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+            tabLayout = (TabLayout) findViewById(R.id.mTabLayout);
+            toolbar = (Toolbar) findViewById(R.id.toolbarFeed);
+            floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingMensagem);
+            drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.mTabLayout);
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_home));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_map));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_profile));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+            TabLayout tabLayout = (TabLayout) findViewById(R.id.mTabLayout);
+            tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_home));
+            tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_map));
+            tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_profile));
+            tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
-        viewPager.setOffscreenPageLimit(2);
-        final TabAdapter adapter = new TabAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(adapter);
+            final ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+            viewPager.setOffscreenPageLimit(2);
+            final TabAdapter adapter = new TabAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+            viewPager.setAdapter(adapter);
 
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-
-
-
-
-
-        NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
-        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-
-                if(item.getItemId() == R.id.update_profile){
-                    Intent i = new Intent(FeedActivity.this, CadastroActivity.class);
-                    i.putExtra("usuario", UsuarioAplication.getInstance().getUsuario());
-                    startActivity(i);
+            viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    viewPager.setCurrentItem(tab.getPosition());
                 }
 
-                if(item.getItemId() == R.id.logout){
-                    UsuarioAplication.getInstance().setUsuario(null);
-                    Intent i = new Intent(FeedActivity.this,LoginActivity.class);
-                    startActivity(i);
-                    finish();
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+
                 }
 
-                return true;
-            }
-        });
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
 
-        View view = navView.getHeaderView(0);
-        txCidade = (TextView) view.findViewById(R.id.userCidade);
-        txEstado = (TextView) view.findViewById(R.id.userEstado);
-        txNome = (TextView) view.findViewById(R.id.userNome);
+                }
+            });
 
-        txCidade.setText(UsuarioAplication.getInstance().getUsuario().getCidade());
-        txEstado.setText(UsuarioAplication.getInstance().getUsuario().getEstado());
-        txNome.setText(UsuarioAplication.getInstance().getUsuario().getNome());
+            NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
 
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.mipmap.ic_action_list);
+            View view = navView.getHeaderView(0);
+            txCidade = (TextView) view.findViewById(R.id.userCidade);
+            txEstado = (TextView) view.findViewById(R.id.userEstado);
+            txNome = (TextView) view.findViewById(R.id.userNome);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            txCidade.setText(UsuarioAplication.getInstance().getUsuario().getCidade());
+            txEstado.setText(UsuarioAplication.getInstance().getUsuario().getEstado());
+            txNome.setText(UsuarioAplication.getInstance().getUsuario().getNome());
 
-            @Override
-            public void onClick(View view) {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
+            setSupportActionBar(toolbar);
+            toolbar.setNavigationIcon(R.mipmap.ic_action_list);
+
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
+            });
 
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(FeedActivity.this, DenunciaActivity.class);
-                startActivity(i);
-            }
-        });
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(FeedActivity.this, DenunciaActivity.class);
+                    startActivity(i);
+                }
+            });
+        } else {
+            Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
+            finish();
+        }
     }
-
 
 
 
@@ -155,6 +135,19 @@ public class FeedActivity extends AppCompatActivity {
                 (SearchView) menu.findItem(R.id.search_bar).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         return true;
+    }
+
+    public void onLogoutListener(MenuItem item) {
+        UsuarioAplication.getInstance().setUsuario(null);
+        Intent i = new Intent(FeedActivity.this, LoginActivity.class);
+        startActivity(i);
+        finish();
+    }
+
+    public void onProfileUpdateListener(MenuItem item) {
+        Intent i = new Intent(FeedActivity.this, CadastroActivity.class);
+        i.putExtra("usuario", UsuarioAplication.getInstance().getUsuario());
+        startActivity(i);
     }
 }
 

@@ -61,6 +61,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostAdapterVie
                 if (item.getItemId() == R.id.editPost) {
                     Intent i = new Intent(context, DenunciaActivity.class);
                     i.putExtra("denuncia", denuncia);
+                    i.putExtra("categoria", denuncia.getCategoria());
                     context.startActivity(i);
                 }
                 if (item.getItemId() == R.id.deletePost) {
