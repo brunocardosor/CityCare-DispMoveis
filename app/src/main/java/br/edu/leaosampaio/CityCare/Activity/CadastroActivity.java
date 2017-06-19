@@ -1,6 +1,7 @@
 package br.edu.leaosampaio.CityCare.Activity;
 
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentActivity;
@@ -13,12 +14,15 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,8 +33,7 @@ import br.edu.leaosampaio.CityCare.R;
 
 public class CadastroActivity extends AppCompatActivity{
 
-    private String estado[] = {"Estado","Acre","Alagoas","Amapá","Amazonas","Bahia","Ceará","Distrito Federal","Espírito Santo","Goiás","Maranhão","Mato Grosso","Mato Grosso do Sul","Minas Gerais","Pará","Paraíba","Paraná","Pernambuco","Piauí","Rio de Janeiro","Rio Grande do Norte","Rio Grande do Sul","Rondônia","Roraima","Santa Catarina","São Paulo","Sergipe","Tocantins"};
-    private String cidade[] = {"Cidade","Acrelândia","Assis Brasil","Brasileia","Bujari","Capixaba","Cruzeiro do Sul","Epitaciolândia","Feijó","Jordão","Manoel Urbano","Marechal Thaumaturgo","Mâncio Lima","Plácido de Castro","Porto Acre","Porto Walter","Rio Branco","Rodrigues Alves","Santa Rosa do Purus","Sena Madureira","Senador Guiomard","Tarauacá","Xapuri"};
+
     private EditText txtNome;
     private EditText txtSobrenome;
     private Spinner spinEstado;
@@ -66,16 +69,35 @@ public class CadastroActivity extends AppCompatActivity{
             }
         }));
 
-        ArrayAdapter<String> estados = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,estado);
-        spinEstado.setAdapter(estados);
+        final UsuarioDAO usrDao = new UsuarioDAO(this);
+        List<String> estados = usrDao.listarEstados();
 
-        ArrayAdapter<String> cidades = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,cidade);
-        spinCidade.setAdapter(cidades);
+        ArrayAdapter<String> adapterEstados = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,estados);
+        spinEstado.setAdapter(adapterEstados);
+        spinEstado.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i != 0){
+                    List<String> cidades = usrDao.listarCidades(i);
+                    ArrayAdapter<String> adapterCidades = new ArrayAdapter<String>(CadastroActivity.this, android.R.layout.simple_spinner_dropdown_item,cidades);
+                    spinCidade.setAdapter(adapterCidades);
+                    spinCidade.setClickable(true);
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("Cadastro");
-        toolbar.setNavigationIcon(R.mipmap.ic_back);
+        toolbar.setNavigationIcon(R.drawable.ic_action_arrow_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -110,4 +110,32 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
         }
         return usuarios;
     }
+
+
+    public List<String> listarCidades(int posicao){
+        Cursor c = db.query("cidade", null, "cidade_id_estado='" + posicao + "'", null,null,null,null);
+        List<String> cidades = new ArrayList<String>();
+        cidades.add("Cidade");
+        if(c.moveToFirst()){
+            do {
+                String cidade = c.getString(c.getColumnIndex("cidade"));
+                cidades.add(cidade);
+            }while (c.moveToNext());
+        }
+        return cidades;
+    }
+    public List<String> listarEstados(){
+        Cursor c = db.query("estado",null,null,null,null,null, null);
+        List<String> estados = new ArrayList<String>();
+        estados.add("Estado");
+        if(c.moveToFirst()){
+            do {
+                String estado;
+                estado = c.getString(c.getColumnIndex("estado"));
+                estados.add(estado);
+
+            }while (c.moveToNext());
+        }
+        return estados;
+    }
 }

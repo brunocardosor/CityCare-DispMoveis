@@ -54,7 +54,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostAdapterVie
         holder1.tvData.setText(denuncia.getDataHora());
         holder1.tvCategoria.setText(denuncia.getCategoria().toString());
         holder1.tvDescricao.setText(denuncia.getDescricao());
-        holder1.tvLocalizacao.setText(denuncia.getLocalizacao());
+        holder1.tvLocalizacao.setText(denuncia.getEndereco(context));
         holder1.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

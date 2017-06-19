@@ -52,7 +52,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileA
         view.tvData.setText(denuncia.getDataHora());
         view.tvCategoria.setText(denuncia.getCategoria().toString());
         view.tvDescricao.setText(denuncia.getDescricao());
-        view.tvLocalizacao.setText(denuncia.getLocalizacao());
+        view.tvLocalizacao.setText(denuncia.getEndereco(context));
         view.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

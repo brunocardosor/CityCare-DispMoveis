@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mEmailView;
     private EditText mPasswordView;
 
+
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"; //String com sintaxe do Regex
 
@@ -113,6 +114,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //Codigo para direcionamento apos Login
         else if(userD.login(email,password)){
+
             Intent i = new Intent(LoginActivity.this, FeedActivity.class);
             startActivity(i);
             finish();

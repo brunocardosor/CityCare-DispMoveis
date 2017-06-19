@@ -30,18 +30,22 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
     public boolean salvar(Denuncia denuncia, Context c) {
         if(denuncia.getId() == null) {
             try {
-                db.execSQL("INSERT INTO denuncia(denuncia_id_usuario, denuncia_id_categoria, denuncia_descricao, denuncia_localizacao, denuncia_data_hora)" +
+                db.execSQL("INSERT INTO denuncia(denuncia_id_usuario, denuncia_id_categoria, " +
+                        "denuncia_descricao, denuncia_cidade, denuncia_data_hora," +
+                        "denuncia_latitude, denuncia_longitude)" +
                         "values('" + denuncia.getUsuario().getId() + "'," +
                         "'" + denuncia.getCategoria().getId() + "'," +
                         "'" + denuncia.getDescricao() + "'," +
-                        "'" + denuncia.getLocalizacao() + "'," +
-                        "'" + denuncia.getDataHora() + "')");
+                        "'" + denuncia.getCidade() + "'," +
+                        "'" + denuncia.getDataHora() + "'," +
+                        "'" + denuncia.getLatitude() + "'," +
+                        "'" + denuncia.getLongitude() + "')");
                 Log.i("SALVAR", "Salvo com Sucesso");
                 Toast.makeText(c, "SALVO", Toast.LENGTH_SHORT).show();
                 return true;
             } catch (Exception ex) {
                 Log.e("SALVAR", ex.getMessage());
-                Toast.makeText(c, "ERRO!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(c, ex.getMessage(), Toast.LENGTH_SHORT).show();
                 return false;
             }
         } else {
@@ -68,7 +72,7 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
     public List<Denuncia> feedDenuncias(){
         Cursor c = db.rawQuery("SELECT * FROM denuncia a INNER JOIN categoria b " +
                 "ON a.denuncia_id_categoria = b.id_categoria INNER JOIN usuario c ON a.denuncia_id_usuario = c.id_usuario " +
-                "ORDER BY id_denuncia DESC", null);
+                "WHERE denuncia_cidade='"+ UsuarioAplication.getInstance().getUsuario().getCidade() +"' ORDER BY id_denuncia DESC", null);
         return listar(c);
     }
 
@@ -85,8 +89,10 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
 
                     denuncia.setId(c.getLong(c.getColumnIndex("id_denuncia")));
                     denuncia.setDescricao(c.getString(c.getColumnIndex("denuncia_descricao")));
-                    denuncia.setLocalizacao(c.getString(c.getColumnIndex("denuncia_localizacao")));
+                    denuncia.setCidade(c.getString(c.getColumnIndex("denuncia_cidade")));
                     denuncia.setDataHora(c.getString(c.getColumnIndex("denuncia_data_hora")));
+                    denuncia.setLatitude(c.getDouble(c.getColumnIndex("denuncia_latitude")));
+                    denuncia.setLongitude(c.getDouble(c.getColumnIndex("denuncia_longitude")));
 
                     categoria.setId(c.getLong(c.getColumnIndex("id_categoria")));
                     categoria.setDescricao(c.getString(c.getColumnIndex("descricao_categoria")));
@@ -105,7 +111,6 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
                         denuncia.setUsuario(UsuarioAplication.getInstance().getUsuario());
                     } else {
                         denuncia.setUsuario(usuario);
-
                     }
 
                 } while (c.moveToNext());
@@ -130,7 +135,10 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
         try{
             db.execSQL("UPDATE denuncia SET deuncia_id_categoria = '"+ denuncia.getCategoria().getId() +"'," +
                     "denuncia_descricao = '" + denuncia.getDescricao() +"'," +
-                    "denuncia_localizacao ='"+ denuncia.getLocalizacao()+"' WHERE id_denuncia='"+ denuncia.getId() +"')");
+                    "denuncia_cidade ='"+ denuncia.getCidade()+"'," +
+                    "denuncia_latitude ='" + denuncia.getLatitude()+"'," +
+                    "denuncia_longitude='" + denuncia.getLongitude()+"'," +
+                    " WHERE id_denuncia='"+ denuncia.getId() +"')");
             Toast.makeText(c, "Denuncia Atualizada com Sucesso", Toast.LENGTH_SHORT).show();
             return true;
         } catch (Exception ex) {
@@ -139,5 +147,4 @@ public class DenunciaDAO extends GenericDAO<Denuncia> {
             return false;
         }
     }
-
 }
