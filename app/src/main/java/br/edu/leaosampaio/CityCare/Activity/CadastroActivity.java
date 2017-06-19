@@ -105,63 +105,64 @@ public class CadastroActivity extends AppCompatActivity{
             }
         });
 
-        if(getIntent().hasExtra("usuario")){
+        if(getIntent().hasExtra("usuario")) {
             final Usuario usuario = getIntent().getParcelableExtra("usuario");
             toolbar.setTitle("Atualizar Perfil");
             boolean encontrado = false;
             String[] nome = usuario.getNome().split(" ");
             txtNome.setText(nome[0]);
             String sobrenome = nome[1];
-            if(2 < nome.length){
-                for(int i = 2; i < nome.length;i++){
+            if (2 < nome.length) {
+                for (int i = 2; i < nome.length; i++) {
                     sobrenome += " " + nome[i];
                 }
             }
 
             txtSobrenome.setText(sobrenome);
 
-            while(encontrado == false){
-                for(int i = 0; i < spinEstado.getCount(); i++)
-                if(usuario.getEstado() == spinEstado.getItemAtPosition(i)){
-                    spinEstado.setSelection(i);
-                    encontrado = true;
-                }
-            }
-            encontrado = false;
-            while(encontrado == false){
-                for(int i = 0; i < spinCidade.getCount(); i++){
-                    if(usuario.getCidade() == spinCidade.getItemAtPosition(i)){
-                        spinCidade.setSelection(i);
-                        encontrado = true;
+                for (int i = 0; i < spinEstado.getCount(); i++) {
+                    String txt = spinEstado.getItemAtPosition(i).toString();
+                    String txt2 = usuario.getEstado();
+                    if (txt2 == txt) {
+                        spinEstado.setSelection(i);
+                        return;
                     }
                 }
-            }
-            txtEmail.setText(usuario.getEmail());
-            txtSenha.setText(usuario.getSenha());
-            delete.setVisibility(View.VISIBLE);
-            delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(CadastroActivity.this);
-                    builder.setMessage("Deseja mesmo excluir sua conta?");
-                    builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            UsuarioDAO usrDAO = new UsuarioDAO(CadastroActivity.this);
-                            usrDAO.delete(usuario,CadastroActivity.this);
-                            UsuarioAplication.getInstance().setUsuario(null);
-                            finish();
-                        }
-                    });
 
-                    builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
+                    for (int i = 0; i < spinCidade.getCount(); i++) {
+                        String txt = spinEstado.getItemAtPosition(i).toString();
+                        String txt2 = usuario.getCidade();
+                        if (txt2 == txt) {
+                            spinCidade.setSelection(i);
+                            return;
                         }
-                    });
-                }
-            });
+                txtEmail.setText(usuario.getEmail());
+                txtSenha.setText(usuario.getSenha());
+                delete.setVisibility(View.VISIBLE);
+                delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(CadastroActivity.this);
+                        builder.setMessage("Deseja mesmo excluir sua conta?");
+                        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                UsuarioDAO usrDAO = new UsuarioDAO(CadastroActivity.this);
+                                usrDAO.delete(usuario, CadastroActivity.this);
+                                UsuarioAplication.getInstance().setUsuario(null);
+                                finish();
+                            }
+                        });
+
+                        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        });
+                    }
+                });
+            }
         }
     }
 
