@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.regex.Matcher;
@@ -29,11 +30,6 @@ import br.edu.leaosampaio.CityCare.R;
 public class LoginActivity extends AppCompatActivity {
 
     /**
-     * Id to identity READ_CONTACTS permission request.
-     */
-    private static final int REQUEST_READ_CONTACTS = 0;
-
-    /**
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
      */
@@ -41,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     // UI references.
     private EditText mEmailView;
     private EditText mPasswordView;
-
+    private ProgressBar login_progress;
 
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"; //String com sintaxe do Regex
@@ -114,7 +110,6 @@ public class LoginActivity extends AppCompatActivity {
 
         //Codigo para direcionamento apos Login
         else if(userD.login(email,password)){
-
             Intent i = new Intent(LoginActivity.this, FeedActivity.class);
             startActivity(i);
             finish();

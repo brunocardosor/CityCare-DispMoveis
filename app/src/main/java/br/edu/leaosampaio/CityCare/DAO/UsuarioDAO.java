@@ -46,28 +46,25 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 
     @Override
     public boolean delete(Usuario usuario, Context context) {
-        if(usuario.getId() == null) {
             try {
-                db.delete("usuario", "id_usuario", new String[]{String.valueOf(usuario.getId())});
+                db.rawQuery("DELETE FROM usuario WHERE id_usuario='"+ usuario.getId() + "'",null);
                 Log.i("DELETE", "Usuário deletado");
                 Toast.makeText(context, "Usuario Deletado", Toast.LENGTH_SHORT).show();
                 return true;
             } catch (Exception ex) {
-                Toast.makeText(context, "ERRO!", Toast.LENGTH_SHORT).show();
+                Log.e("DELETE", ex.getMessage());
+                Toast.makeText(context, ex.getMessage(), Toast.LENGTH_SHORT).show();
                 return false;
             }
-        } else {
-            atualizar(usuario, context);
-        } return false;
-    }
+        }
 
     public boolean atualizar(Usuario usuario, Context c) {
         try{
-            db.execSQL("UPDATE usuario SET nome_usuario='"+ usuario.getNome() +"'" +
-                    " email_usuario='" + usuario.getEmail() +"'" +
-                    "senha_usuario='"+usuario.getSenha() + "'" +
-                    "estado_usuario='" + usuario.getEstado() + "'" +
-                    "cidade_usaurio='" + usuario.getCidade() +"' WHERE id_usuario='"+usuario.getId()+"'" );
+            db.execSQL("UPDATE usuario SET nome_usuario='"+ usuario.getNome() +"'," +
+                    " email_usuario='" + usuario.getEmail() +"'," +
+                    "senha_usuario='"+usuario.getSenha() + "'," +
+                    "estado_usuario='" + usuario.getEstado() + "'," +
+                    "cidade_usuario='" + usuario.getCidade() +"' WHERE id_usuario='"+usuario.getId()+"'" );
             Toast.makeText(c,"Usuario Atualizado", Toast.LENGTH_LONG).show();
             return true;
         }catch (Exception ex){

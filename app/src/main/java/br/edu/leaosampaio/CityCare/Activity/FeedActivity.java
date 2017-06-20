@@ -145,8 +145,7 @@ public class FeedActivity extends AppCompatActivity {
     }
 
     public void onProfileUpdateListener(MenuItem item) {
-        Intent i = new Intent(FeedActivity.this, CadastroActivity.class);
-        i.putExtra("usuario", UsuarioAplication.getInstance().getUsuario());
+        Intent i = new Intent(FeedActivity.this, AtualizarActivity.class);
         startActivity(i);
     }
 }

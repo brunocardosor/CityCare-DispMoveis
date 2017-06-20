@@ -1,18 +1,10 @@
 package br.edu.leaosampaio.CityCare.Activity;
 
-import android.content.DialogInterface;
-import android.database.Cursor;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,14 +13,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import br.edu.leaosampaio.CityCare.DAO.UsuarioDAO;
 import br.edu.leaosampaio.CityCare.Modelo.Usuario;
-import br.edu.leaosampaio.CityCare.Modelo.UsuarioAplication;
 import br.edu.leaosampaio.CityCare.R;
 
 public class CadastroActivity extends AppCompatActivity{
@@ -54,7 +44,6 @@ public class CadastroActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
 
-        Button delete = (Button) findViewById(R.id.btDeletar);
         txtNome = (EditText) findViewById(R.id.txtNome);
         txtSobrenome = (EditText) findViewById(R.id.txtSobrenome);
         spinEstado = (Spinner) findViewById(R.id.spinEstado);
@@ -65,21 +54,22 @@ public class CadastroActivity extends AppCompatActivity{
         cadastrar = (Button) findViewById(R.id.btCadastrar);
         cadastrar.setOnClickListener((new View.OnClickListener() {
             @Override
-            public void onClick(View view) { UsuarioCadastrar();
+            public void onClick(View view) {
+                UsuarioCadastrar();
             }
         }));
 
         final UsuarioDAO usrDao = new UsuarioDAO(this);
         List<String> estados = usrDao.listarEstados();
 
-        ArrayAdapter<String> adapterEstados = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,estados);
+        ArrayAdapter<String> adapterEstados = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, estados);
         spinEstado.setAdapter(adapterEstados);
         spinEstado.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i != 0){
+                if (i != 0) {
                     List<String> cidades = usrDao.listarCidades(i);
-                    ArrayAdapter<String> adapterCidades = new ArrayAdapter<String>(CadastroActivity.this, android.R.layout.simple_spinner_dropdown_item,cidades);
+                    ArrayAdapter<String> adapterCidades = new ArrayAdapter<String>(CadastroActivity.this, android.R.layout.simple_spinner_dropdown_item, cidades);
                     spinCidade.setAdapter(adapterCidades);
                     spinCidade.setClickable(true);
                 }
@@ -93,7 +83,6 @@ public class CadastroActivity extends AppCompatActivity{
         });
 
 
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("Cadastro");
@@ -105,65 +94,6 @@ public class CadastroActivity extends AppCompatActivity{
             }
         });
 
-        if(getIntent().hasExtra("usuario")) {
-            final Usuario usuario = getIntent().getParcelableExtra("usuario");
-            toolbar.setTitle("Atualizar Perfil");
-            boolean encontrado = false;
-            String[] nome = usuario.getNome().split(" ");
-            txtNome.setText(nome[0]);
-            String sobrenome = nome[1];
-            if (2 < nome.length) {
-                for (int i = 2; i < nome.length; i++) {
-                    sobrenome += " " + nome[i];
-                }
-            }
-
-            txtSobrenome.setText(sobrenome);
-
-                for (int i = 0; i < spinEstado.getCount(); i++) {
-                    String txt = spinEstado.getItemAtPosition(i).toString();
-                    String txt2 = usuario.getEstado();
-                    if (txt2 == txt) {
-                        spinEstado.setSelection(i);
-                        return;
-                    }
-                }
-
-                    for (int i = 0; i < spinCidade.getCount(); i++) {
-                        String txt = spinEstado.getItemAtPosition(i).toString();
-                        String txt2 = usuario.getCidade();
-                        if (txt2 == txt) {
-                            spinCidade.setSelection(i);
-                            return;
-                        }
-                txtEmail.setText(usuario.getEmail());
-                txtSenha.setText(usuario.getSenha());
-                delete.setVisibility(View.VISIBLE);
-                delete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(CadastroActivity.this);
-                        builder.setMessage("Deseja mesmo excluir sua conta?");
-                        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                UsuarioDAO usrDAO = new UsuarioDAO(CadastroActivity.this);
-                                usrDAO.delete(usuario, CadastroActivity.this);
-                                UsuarioAplication.getInstance().setUsuario(null);
-                                finish();
-                            }
-                        });
-
-                        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                            }
-                        });
-                    }
-                });
-            }
-        }
     }
 
     public void UsuarioCadastrar() {

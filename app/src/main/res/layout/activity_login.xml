@@ -10,8 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="br.edu.leaosampaio.CityCare.Activity.LoginActivity">
 
-    <!-- Login progress -->
-
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
@@ -101,33 +99,7 @@
                     android:textColor="@android:color/background_light"
                     android:textStyle="bold" />
 
-                <ImageButton
-                    android:id="@+id/btFacebook"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/btCadastro"
-                    android:layout_below="@+id/btCadastro"
-                    android:layout_marginTop="16dp"
-                    android:background="#3e4495"
-                    android:src="@mipmap/ic_facebook_button" />
-                <ImageButton
-                    android:layout_marginTop="16dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/btCadastro"
-                    android:layout_alignRight="@+id/btCadastro"
-                    android:id="@+id/btGMail"
-                    android:src="@mipmap/ic_google_button"
-                    android:background="@android:color/holo_red_dark"/>
             </RelativeLayout>
    </LinearLayout>
 </ScrollView>
-
-    <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone" />
 </LinearLayout>

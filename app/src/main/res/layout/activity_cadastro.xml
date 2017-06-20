@@ -106,17 +106,6 @@
             android:background="@android:color/holo_blue_dark"
             android:textColor="@android:color/background_light"
             android:layout_gravity="center"/>
-        <Button
-            android:layout_marginTop="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="   Excluir Usuario   "
-            android:background="@color/colorPrimary"
-            android:textColor="@color/colorAccent"
-            android:layout_gravity="center"
-            android:id="@+id/btDeletar"
-            android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
     </ScrollView>
